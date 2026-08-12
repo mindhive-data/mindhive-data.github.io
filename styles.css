@@ -14,6 +14,7 @@
   --slate:     #35424E;
   --amber:     #F5A623;
   --green:     #17805B;
+  --wa:        #25D366;   /* WhatsApp brand green */
 
   /* derived surfaces */
   --paper:      #FFFFFF;
@@ -603,6 +604,36 @@ img { max-width: 100%; }
 }
 .foot__contacts a:hover { color: var(--amber); }
 
+/* WhatsApp action. Navy on WhatsApp green clears 8:1 contrast; white on that
+   green would only reach ~1.7:1, so the label stays dark. */
+.foot__contacts .wabtn {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 0.15rem;
+  padding: 0.62rem 1.1rem;
+  border-radius: 999px;
+  background: var(--wa);
+  color: var(--navy);
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  transition: transform .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+}
+.foot__contacts .wabtn:hover {
+  background: #3AE47C;
+  color: var(--navy);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px -10px rgba(37, 211, 102, .75);
+}
+.wabtn__ico { width: 18px; height: 18px; fill: currentColor; flex: 0 0 auto; }
+
+.foot__wanum {
+  font-size: var(--fs-small);
+  color: #8FA5B7;
+  margin-top: 0.45rem;
+}
+
 .foot__base {
   display: flex;
   flex-wrap: wrap;
@@ -721,7 +752,7 @@ img { max-width: 100%; }
   .crow { flex-wrap: wrap; justify-content: center; padding-right: 0; }
   .crow[aria-hidden="true"] { display: none; }
   .marquee__btn { display: none; }
-  .btn:hover, .card:hover, .ctile:hover { transform: none; }
+  .btn:hover, .card:hover, .ctile:hover, .wabtn:hover { transform: none; }
 }
 
 @media (prefers-contrast: more) {

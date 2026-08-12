@@ -80,6 +80,25 @@ layout and Bahasa Malaysia renders correctly even with JavaScript disabled.
 
 Deep-link to English with `?lang=en` — e.g. https://mindhive-data.github.io/?lang=en
 
+## Contact / WhatsApp
+
+The phone row is a **WhatsApp deep link**, not a `tel:` link. There are two
+`<a class="wabtn">` elements — one per language — so the pre-filled message
+matches the page language without any JavaScript:
+
+```
+https://wa.me/601161252399?text=<url-encoded message>
+```
+
+The number is in **international format with the national leading 0 dropped**
+(`+6011-6125 2399` → `601161252399`); wa.me rejects other formats. If the
+number or the greeting changes, update **both** links. The `&` inside
+"data & AI" must stay percent-encoded as `%26`, or WhatsApp will truncate
+the message at that point.
+
+The label sits in navy on WhatsApp green (7.6:1). White on that green is only
+~1.7:1, so don't switch the label to white.
+
 ## Design tokens
 
 Defined once at the top of `styles.css` under `:root`:
