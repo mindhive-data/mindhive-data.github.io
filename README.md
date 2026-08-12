@@ -17,7 +17,6 @@ Static site, no build step, served by GitHub Pages from the root of `main`.
 | `favicon.png` | Logo mark on a navy rounded square. 256×256. |
 | `clients/*.png` | The ten client logos in the carousel, transparent. |
 | `.nojekyll` | Tells Pages to serve files as-is (no Jekyll build). |
-| `CLAUDE.md` | Build brief / content source of truth. |
 
 ## Logo assets
 
