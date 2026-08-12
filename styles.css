@@ -464,91 +464,87 @@ img { max-width: 100%; }
   line-height: 1.45;
 }
 
-/* ---------- track record ---------- */
-.tracks { display: grid; gap: clamp(1.75rem, 3.5vw, 2.5rem); }
-.track {
-  display: grid;
-  gap: var(--s2);
-  padding-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
-  border-bottom: 1px solid var(--line);
+/* ---------- track record: single client carousel ---------- */
+.shead--split {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s3);
+  max-width: none;
 }
-.track:last-child { border-bottom: 0; padding-bottom: 0; }
-/* one token drives the pill, its hexagon bullet and every tile bullet in the group */
-.track--dw    { --cat: var(--green); }
-.track--gen   { --cat: var(--navy); }
-.track--train { --cat: var(--blue); }
+.shead__lede { color: var(--slate-mute); margin-top: 0.75rem; max-width: 34rem; }
 
-.pill {
-  justify-self: start;
-  color: var(--cat);
-  white-space: nowrap;
+.marquee__btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: var(--body);
-  font-size: var(--fs-small);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  padding: 0.42rem 1rem;
-  border-radius: 999px;
-  border: 1.5px solid currentColor;
-  background: var(--paper);
-}
-.pill::before {
-  content: "";
-  width: 11px;
-  height: 12px;
-  background: currentColor;
-  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
-}
-
-/* content-sized tiles, so a group of two doesn't read as a broken grid */
-.marks { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-.mark {
-  flex: 0 1 auto;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  column-gap: 0.6rem;
-  row-gap: 0.1rem;
-  min-width: 8.5rem;
-  padding: 0.8rem 1.15rem;
-  border-radius: var(--r-md);
+  flex: 0 0 auto;
+  font: 600 var(--fs-small)/1 var(--body);
+  color: var(--slate-mute);
   background: var(--paper);
   border: 1px solid var(--line);
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: 1rem;
-  color: var(--navy);
-  letter-spacing: -0.015em;
-  transition: transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+  border-radius: 999px;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  transition: color .2s var(--ease), border-color .2s var(--ease);
 }
-.mark:hover {
-  transform: translateY(-3px);
-  border-color: rgba(45, 95, 156, .35);
-  box-shadow: var(--shadow-sm);
+.marquee__btn:hover { color: var(--navy); border-color: var(--blue); }
+.marquee__ico { width: 14px; height: 14px; fill: currentColor; }
+/* the button is named for the action it performs, so icon + label flip together */
+.marquee__btn .ico-play,
+.marquee__btn .lbl--play { display: none; }
+.marquee__btn.is-paused .ico-play { display: block; }
+.marquee__btn.is-paused .lbl--play { display: inline; }
+.marquee__btn.is-paused .ico-pause,
+.marquee__btn.is-paused .lbl--pause { display: none; }
+
+/* Full-bleed strip: it sits outside .wrap so logos scroll edge to edge. */
+.marquee {
+  position: relative;
+  overflow: hidden;
+  padding-block: 0.5rem;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
 }
-.mark::before {
-  content: "";
-  grid-row: 1;
-  align-self: center;
-  width: 11px;
-  height: 12px;
-  background: var(--cat);
-  opacity: .85;
-  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+/* Two identical rows sit side by side; shifting the track by exactly one
+   row width (-50%) lands on the copy, so the loop has no visible seam. */
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee 46s linear infinite;
 }
-/* centre the bullet across both lines only when there's a subtitle */
-.mark:has(.mark__sub)::before { grid-row: 1 / span 2; }
-.mark:hover::before { opacity: 1; }
-.mark__sub {
-  font-family: var(--body);
-  font-weight: 400;
-  font-size: 0.76rem;
-  max-width: 9.5rem;
-  line-height: 1.35;
-  color: var(--slate-mute);
-  letter-spacing: 0;
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track { animation-play-state: paused; }
+.marquee.is-paused .marquee__track { animation-play-state: paused; }
+
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+.crow {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  padding-right: var(--s2);   /* keeps spacing even across the seam */
+  margin: 0;
+}
+.ctile {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 176px;
+  height: 98px;
+  padding: 0 1.15rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  transition: border-color .25s var(--ease), box-shadow .25s var(--ease);
+}
+.ctile:hover { border-color: rgba(45, 95, 156, .35); box-shadow: var(--shadow-sm); }
+.ctile img {
+  max-width: 134px;
+  max-height: 54px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 /* ---------- footer ---------- */
@@ -679,9 +675,6 @@ img { max-width: 100%; }
   .svc { grid-template-columns: auto minmax(0, 1fr); }
   .svc__badges { grid-area: 1 / 1 / 3 / 2; }
   .svc__h, .svc__text { grid-column: 2; }
-  .track { grid-template-columns: minmax(0, 12.5rem) minmax(0, 1fr); align-items: start; }
-  .pill { grid-column: 1; margin-top: 0.8rem; }
-  .marks { grid-column: 2; }
 }
 
 /* desktop: title and description sit side by side, filling the measure */
@@ -694,6 +687,13 @@ img { max-width: 100%; }
 
 @media (max-width: 560px) {
   .hero__art svg { max-width: 220px; }
+}
+
+@media (max-width: 760px) {
+  .shead--split { flex-direction: column; align-items: flex-start; }
+  .ctile { width: 148px; height: 86px; padding: 0 0.9rem; }
+  .ctile img { max-width: 112px; max-height: 46px; }
+  .marquee__track { animation-duration: 34s; }
 }
 
 @media (max-width: 480px) {
@@ -716,7 +716,12 @@ img { max-width: 100%; }
   }
   .reveal { opacity: 1; transform: none; }
   .flower .cell { animation: none; }
-  .btn:hover, .card:hover, .mark:hover { transform: none; }
+  .marquee { overflow: visible; -webkit-mask-image: none; mask-image: none; }
+  .marquee__track { animation: none !important; width: auto; flex-wrap: wrap; justify-content: center; }
+  .crow { flex-wrap: wrap; justify-content: center; padding-right: 0; }
+  .crow[aria-hidden="true"] { display: none; }
+  .marquee__btn { display: none; }
+  .btn:hover, .card:hover, .ctile:hover { transform: none; }
 }
 
 @media (prefers-contrast: more) {
@@ -731,4 +736,7 @@ img { max-width: 100%; }
   .brand--foot { display: none; }
   .hero__title, .foot__thanks, .foot__contacts a { color: #000 !important; }
   .reveal { opacity: 1 !important; transform: none !important; }
+  .marquee { overflow: visible !important; -webkit-mask-image: none !important; mask-image: none !important; }
+  .marquee__track { animation: none !important; width: auto !important; flex-wrap: wrap !important; }
+  .crow[aria-hidden="true"], .marquee__btn { display: none !important; }
 }

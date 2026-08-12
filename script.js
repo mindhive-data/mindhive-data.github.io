@@ -147,7 +147,23 @@
   }
 
   /* ---------------------------------------------------------
-     5. Copyright year (both language variants)
+     5. Client carousel pause control
+     The strip auto-scrolls, so WCAG 2.2.2 wants a way to stop it
+     that doesn't depend on hovering. Under reduced motion the CSS
+     already stops it and hides this button, so wire nothing up.
+     --------------------------------------------------------- */
+  var marquee = document.getElementById('marquee');
+  var marqueeBtn = document.getElementById('marqueebtn');
+
+  if (marquee && marqueeBtn && !reduced) {
+    marqueeBtn.addEventListener('click', function () {
+      var paused = marquee.classList.toggle('is-paused');
+      marqueeBtn.classList.toggle('is-paused', paused);
+    });
+  }
+
+  /* ---------------------------------------------------------
+     6. Copyright year (both language variants)
      --------------------------------------------------------- */
   var year = String(new Date().getFullYear());
   ['yr', 'yr-en'].forEach(function (id) {

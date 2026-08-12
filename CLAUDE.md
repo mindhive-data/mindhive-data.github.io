@@ -143,6 +143,13 @@ Academy) and the client logos stay unchanged in both languages.
      of participants
 
 ### Tim Kami Berpengalaman Dalam Sistem Data & AI / Our Track Record in Data & AI Systems
+
+> **SUPERSEDED (client decision, Aug 2026).** The category split below is no
+> longer used on the site. All clients now appear in a **single auto-scrolling
+> carousel** with no category labels, using the real client logos extracted
+> from page 5 of the source PDF (see `clients/` and README). Keep the category
+> list here only as a record of which engagement was which.
+
 Group under three pill categories (category label translates, logos don't):
 - **BM**: Data warehousing / **EN**: Data warehousing — IMAN Publication,
   MHTC (Malaysia Healthcare Travel Council), Toyota, Alamflora, Daito

@@ -15,6 +15,7 @@ Static site, no build step, served by GitHub Pages from the root of `main`.
 | `logo.png` | Horizontal logo lockup, colour, transparent (nav). 454×132. |
 | `logo-white.png` | Same lockup reversed to white, for the navy footer. |
 | `favicon.png` | Logo mark on a navy rounded square. 256×256. |
+| `clients/*.png` | The ten client logos in the carousel, transparent. |
 | `.nojekyll` | Tells Pages to serve files as-is (no Jekyll build). |
 | `CLAUDE.md` | Build brief / content source of truth. |
 
@@ -33,6 +34,26 @@ its wordmark is navy `#00293F` and disappears. Use `logo-white.png` there.
 
 If the client later supplies vector originals (SVG/AI/EPS), swap these PNGs
 out — the markup only needs the `src` and the 454:132 aspect ratio changed.
+
+## Client carousel
+
+The ten client logos in `clients/` also come from the source PDF (page 5),
+trimmed to their artwork and scaled to fit a 260×104 box. They are **not**
+grouped by service type — one continuous strip, per the client's instruction.
+
+To swap in a better logo, drop a transparent PNG (or SVG) into `clients/`
+and update the matching `<li class="ctile">` in `index.html`. Each logo
+appears **twice** — once in the visible row and once in the duplicate row
+marked `aria-hidden="true"` — and both copies must stay identical or the
+loop will visibly jump. Update the `alt` on the first copy only; the
+duplicate keeps `alt=""` so screen readers don't read the list twice.
+
+How the loop works: two identical rows sit side by side and the track slides
+by exactly one row width (`translateX(-50%)`), so the second copy lands
+precisely where the first started. The strip pauses on hover, on keyboard
+focus, and via the Pause button (WCAG 2.2.2). Under
+`prefers-reduced-motion: reduce` it stops entirely and reflows into a static
+wrapped grid showing every logo at once.
 
 ## Editing content
 
