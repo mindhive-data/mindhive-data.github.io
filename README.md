@@ -12,9 +12,27 @@ Static site, no build step, served by GitHub Pages from the root of `main`.
 | `index.html` | The whole page. Both languages live in the markup, tagged `data-lang="ms"` / `data-lang="en"`. |
 | `styles.css` | Design tokens + all styling. No preprocessor. |
 | `script.js` | Language switch, mobile nav, scroll reveal. Vanilla, ~150 lines. |
-| `favicon.svg` | Hexagon mark. |
+| `logo.png` | Horizontal logo lockup, colour, transparent (nav). 454×132. |
+| `logo-white.png` | Same lockup reversed to white, for the navy footer. |
+| `favicon.png` | Logo mark on a navy rounded square. 256×256. |
 | `.nojekyll` | Tells Pages to serve files as-is (no Jekyll build). |
 | `CLAUDE.md` | Build brief / content source of truth. |
+
+## Logo assets
+
+The logo is the **real Mindhive mark**, extracted from `Mindhive Company
+Profile.pdf` (the source artwork is an embedded 451×343 raster with a white
+background). It was un-composited off white to recover per-pixel alpha, then
+the mark and wordmark were re-composed into a *horizontal* lockup — the PDF's
+lockup is stacked, which doesn't fit a nav bar.
+
+Because it's the client's real artwork, both blue gradient dots on the "i"s
+are preserved. Display it at 30–44px tall; the source has enough resolution
+for 3× displays at those sizes. **Don't put `logo.png` on a dark background** —
+its wordmark is navy `#00293F` and disappears. Use `logo-white.png` there.
+
+If the client later supplies vector originals (SVG/AI/EPS), swap these PNGs
+out — the markup only needs the `src` and the 454:132 aspect ratio changed.
 
 ## Editing content
 

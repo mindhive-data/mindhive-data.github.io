@@ -135,28 +135,22 @@ img { max-width: 100%; }
 .section { padding-block: clamp(3.75rem, 8vw, var(--s7)); }
 .section--alt { background: var(--paper); border-block: 1px solid var(--line-soft); }
 
-/* ---------- brand lockup ---------- */
+/* ---------- brand lockup ----------
+   The real Mindhive logo, extracted from the company profile PDF and
+   composed into a horizontal lockup (the source artwork is stacked).
+   logo.png is the colour version; logo-white.png is the reversed
+   version for the navy footer. Aspect ratio 454:132. */
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  color: var(--navy);
   flex: 0 0 auto;
 }
-.brand__mark { width: 30px; height: 27px; color: var(--blue); }
-.brand__word {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 1.32rem;
-  letter-spacing: -0.035em;
-  position: relative;
-  padding-right: 2px;
+.brand__img {
+  height: 38px;
+  width: auto;
+  display: block;
 }
-/* the "i" carries the wordmark's blue accent */
-.brand__i { font-style: normal; color: var(--blue); }
-.brand--foot { color: #fff; }
-.brand--foot .brand__mark { color: var(--blue-pale); }
-.brand--foot .brand__i { color: var(--amber); }
+.brand--foot .brand__img { height: 36px; }
 
 /* ---------- nav ---------- */
 .nav {
@@ -702,6 +696,10 @@ img { max-width: 100%; }
   .hero__art svg { max-width: 220px; }
 }
 
+@media (max-width: 480px) {
+  .brand__img { height: 32px; }
+}
+
 @media (max-width: 420px) {
   .btn { width: 100%; justify-content: center; }
 }
@@ -730,6 +728,7 @@ img { max-width: 100%; }
 @media print {
   .nav, .hero__bg, .foot__bg, .hero__art, .skip, .langtoggle, .burger { display: none !important; }
   .hero, .foot { background: #fff !important; color: #000 !important; }
+  .brand--foot { display: none; }
   .hero__title, .foot__thanks, .foot__contacts a { color: #000 !important; }
   .reveal { opacity: 1 !important; transform: none !important; }
 }
