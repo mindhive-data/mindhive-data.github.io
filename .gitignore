@@ -1,0 +1,6 @@
+.DS_Store
+.claude/
+
+# Source company profile — contains personnel bios the client asked to keep
+# off the site; must not be published in a public repo.
+*.pdf
