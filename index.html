@@ -20,7 +20,8 @@
 </head>
 <body>
 
-<!-- Shared SVG defs: honeycomb tile reused by the hero + footer background layers -->
+<!-- Shared SVG defs: the honeycomb tile behind the hero + footer, and one
+     mark per product so every place that shows a product uses the same drawing. -->
 <svg class="svgdefs" aria-hidden="true" focusable="false" width="0" height="0">
   <defs>
     <pattern id="comb" width="72" height="41.57" patternUnits="userSpaceOnUse">
@@ -31,6 +32,42 @@
         <path d="M12 41.57 24 20.78 48 20.78 60 41.57 48 62.35 24 62.35Z"/>
       </g>
     </pattern>
+
+    <!-- OneGo: channels merging into one arrow, in a honey cell (the product's own mark) -->
+    <symbol id="mk-onego" viewBox="0 0 48 48">
+      <path d="M24 4 41.3 14V34L24 44 6.7 34V14Z" fill="#FCF2DE" stroke="#B07314" stroke-width="2.6" stroke-linejoin="round"/>
+      <g fill="none" stroke="#B07314" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14.5 16.5C19 16.5 18.5 24 23 24"/>
+        <path d="M14.5 31.5C19 31.5 18.5 24 23 24"/>
+        <path d="M14.5 24H32.5"/>
+        <path d="M27.5 19L32.5 24L27.5 29"/>
+      </g>
+    </symbol>
+
+    <!-- Whizzard: a document with a spark, in a blue cell (the product's own mark) -->
+    <symbol id="mk-whizzard" viewBox="0 0 48 48">
+      <path d="M24 3.5 41.8 13.75V34.25L24 44.5 6.2 34.25V13.75Z" fill="#2F5BEA" stroke="#2F5BEA" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M14 14h8.5L28 19.5V33a2 2 0 0 1-2 2H14a2 2 0 0 1-2-2V16a2 2 0 0 1 2-2Z" fill="#fff"/>
+      <path d="M22.5 14v4a1.5 1.5 0 0 0 1.5 1.5H28Z" fill="#B9CBFA"/>
+      <path d="M15.5 25.5h8.5M15.5 30h5.5" stroke="#2F5BEA" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M33 9.5C34.08 12.98 35.52 14.42 39 15.5C35.52 16.58 34.08 18.02 33 21.5C31.92 18.02 30.48 16.58 27 15.5C30.48 14.42 31.92 12.98 33 9.5Z" fill="#FFD66B"/>
+      <path d="M35.5 25C36.04 26.74 36.76 27.46 38.5 28C36.76 28.54 36.04 29.26 35.5 31C34.96 29.26 34.24 28.54 32.5 28C34.24 27.46 34.96 26.74 35.5 25Z" fill="#fff"/>
+    </symbol>
+
+    <!-- Smart Tahfiz: an open book with a spark, in a green cell -->
+    <symbol id="mk-tahfiz" viewBox="0 0 48 48">
+      <path d="M24 3.5 41.8 13.75V34.25L24 44.5 6.2 34.25V13.75Z" fill="#1A5C38" stroke="#1A5C38" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M24 20.5c-2.9-1.9-6.6-2.5-10-1.9v12.6c3.4-.6 7.1 0 10 1.9 2.9-1.9 6.6-2.5 10-1.9V18.6c-3.4-.6-7.1 0-10 1.9Z" fill="#fff"/>
+      <path d="M24 20.5v12.6" stroke="#1A5C38" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M24 8.5c.62 2 1.45 2.83 3.45 3.45-2 .62-2.83 1.45-3.45 3.45-.62-2-1.45-2.83-3.45-3.45 2-.62 2.83-1.45 3.45-3.45Z" fill="#E7B04A"/>
+    </symbol>
+
+    <symbol id="ico-arrow" viewBox="0 0 16 16">
+      <path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="ico-check" viewBox="0 0 20 20">
+      <path d="M5 10.4l3.2 3.1L15 6.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
   </defs>
 </svg>
 
@@ -47,6 +84,7 @@
     </a>
 
     <nav class="nav__links" id="navlinks" aria-label="Utama">
+      <a href="#products"><span data-lang="ms">Produk</span><span data-lang="en">Products</span></a>
       <a href="#services"><span data-lang="ms">Perkhidmatan</span><span data-lang="en">Services</span></a>
       <a href="#why"><span data-lang="ms">Mengapa Kami</span><span data-lang="en">Why Us</span></a>
       <a href="#contact"><span data-lang="ms">Hubungi Kami</span><span data-lang="en">Contact Us</span></a>
@@ -76,7 +114,8 @@
 
   <div class="wrap hero__inner">
     <div class="hero__copy">
-      <p class="eyebrow eyebrow--light">
+      <p class="hero__eyebrow">
+        <span class="hero__eyebrow-dot" aria-hidden="true"></span>
         <span data-lang="ms">Pakar Data &amp; Kecerdasan Buatan (AI)</span>
         <span data-lang="en">Data &amp; Artificial Intelligence (AI) Specialists</span>
       </p>
@@ -95,204 +134,61 @@
         <a class="btn btn--amber" href="#contact">
           <span data-lang="ms">Hubungi Kami</span>
           <span data-lang="en">Contact Us</span>
-          <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg aria-hidden="true" focusable="false"><use href="#ico-arrow"/></svg>
         </a>
-        <a class="btn btn--ghost" href="#services">
-          <span data-lang="ms">Lihat Perkhidmatan</span>
-          <span data-lang="en">Explore Services</span>
+        <a class="btn btn--ghost" href="#products">
+          <span data-lang="ms">Lihat Produk Kami</span>
+          <span data-lang="en">Explore Our Products</span>
         </a>
+      </div>
+
+      <div class="hero__products">
+        <span class="hero__products-lab"><span data-lang="ms">Produk kami</span><span data-lang="en">Our products</span></span>
+        <ul class="hero__chips">
+          <li><a class="pchip" href="#onego"><svg aria-hidden="true" focusable="false"><use href="#mk-onego"/></svg>OneGo</a></li>
+          <li><a class="pchip" href="#whizzard"><svg aria-hidden="true" focusable="false"><use href="#mk-whizzard"/></svg>Whizzard</a></li>
+          <li><a class="pchip" href="#smart-tahfiz"><svg aria-hidden="true" focusable="false"><use href="#mk-tahfiz"/></svg>Smart Tahfiz</a></li>
+        </ul>
       </div>
     </div>
 
-    <!-- Signature moment: honeycomb flower -->
+    <!-- Signature moment: the three products, stacked. Decorative here —
+         the Products section below carries the described screenshots. -->
     <div class="hero__art" aria-hidden="true">
-      <svg viewBox="-134 -144 268 288" focusable="false">
-        <defs>
-          <linearGradient id="cellA" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#3C74B6"/><stop offset="1" stop-color="#1B4272"/>
-          </linearGradient>
-          <linearGradient id="cellB" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#F7B444"/><stop offset="1" stop-color="#DE8E14"/>
-          </linearGradient>
-          <radialGradient id="glow" cx=".5" cy=".5" r=".5">
-            <stop offset="0" stop-color="#2D5F9C" stop-opacity=".5"/>
-            <stop offset=".65" stop-color="#2D5F9C" stop-opacity=".12"/>
-            <stop offset="1" stop-color="#2D5F9C" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-
-        <circle cx="0" cy="0" r="140" fill="url(#glow)"/>
-        <circle cx="0" cy="0" r="118" fill="none" stroke="#8FC3E8" stroke-width="1" opacity=".3"/>
-        <circle cx="0" cy="0" r="134" fill="none" stroke="#8FC3E8" stroke-width="1" opacity=".14"/>
-
-        <g class="flower">
-          <path class="cell" style="--i:0" d="M-48 0 -24 -41.57 24 -41.57 48 0 24 41.57 -24 41.57Z" fill="url(#cellA)"/>
-          <path class="cell" style="--i:1" d="M24 -41.57 48 -83.14 96 -83.14 120 -41.57 96 0 48 0Z" fill="#F7F9FC" opacity=".92"/>
-          <path class="cell" style="--i:2" d="M24 41.57 48 0 96 0 120 41.57 96 83.14 48 83.14Z" fill="url(#cellB)"/>
-          <path class="cell" style="--i:3" d="M-120 -41.57 -96 -83.14 -48 -83.14 -24 -41.57 -48 0 -96 0Z" fill="none" stroke="#8FC3E8" stroke-width="1.8" opacity=".55"/>
-          <path class="cell" style="--i:4" d="M-120 41.57 -96 0 -48 0 -24 41.57 -48 83.14 -96 83.14Z" fill="#2D5F9C" opacity=".42"/>
-          <path class="cell" style="--i:5" d="M-48 -83.14 -24 -124.71 24 -124.71 48 -83.14 24 -41.57 -24 -41.57Z" fill="none" stroke="#8FC3E8" stroke-width="1.8" opacity=".38"/>
-          <path class="cell" style="--i:6" d="M-48 83.14 -24 41.57 24 41.57 48 83.14 24 124.71 -24 124.71Z" fill="#8FC3E8" opacity=".18"/>
-        </g>
-      </svg>
+      <div class="stack">
+        <span class="stack__hex stack__hex--a"></span>
+        <span class="stack__hex stack__hex--b"></span>
+        <figure class="frame stack__card stack__card--back">
+          <div class="frame__bar"><i></i><i></i><i></i></div>
+          <img src="products/whizzard-verified.webp" width="1600" height="1000" alt="" decoding="async">
+        </figure>
+        <figure class="frame stack__card stack__card--front">
+          <div class="frame__bar"><i></i><i></i><i></i></div>
+          <img src="products/onego-overview.webp" width="1600" height="1000" alt="" fetchpriority="high" decoding="async">
+        </figure>
+        <figure class="frame stack__card stack__card--side">
+          <div class="frame__bar"><i></i><i></i><i></i></div>
+          <img src="products/smart-tahfiz-dashboard.webp" width="1600" height="1000" alt="" decoding="async">
+        </figure>
+        <span class="stack__tag stack__tag--back"><svg focusable="false"><use href="#mk-whizzard"/></svg>Whizzard</span>
+        <span class="stack__tag stack__tag--front"><svg focusable="false"><use href="#mk-onego"/></svg>OneGo</span>
+        <span class="stack__tag stack__tag--side"><svg focusable="false"><use href="#mk-tahfiz"/></svg>Smart Tahfiz</span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ WHY US ============ -->
-<section class="section" id="why">
+<!-- ============ TRACK RECORD (client strip) ============ -->
+<section class="clients" id="track">
   <div class="wrap">
-    <header class="shead">
-      <p class="eyebrow"><span data-lang="ms">Mengapa Kami</span><span data-lang="en">Why Us</span></p>
-      <h2><span data-lang="ms">Mengapa Pilih Kami</span><span data-lang="en">Why Choose Us</span></h2>
-    </header>
-
-    <div class="grid grid--3">
-      <article class="card reveal">
-        <span class="hexicon" aria-hidden="true">
-          <svg viewBox="0 0 48 48" focusable="false">
-            <path class="hexicon__frame" d="M15 3h18l9 21-9 21H15L6 24Z"/>
-            <g class="hexicon__glyph" transform="translate(1.2 1.2) scale(0.95)">
-              <circle cx="24" cy="16" r="3.2"/><circle cx="16" cy="30" r="3.2"/><circle cx="32" cy="30" r="3.2"/>
-              <path d="M22 18.7 17.8 27M26 18.7 30.2 27M19.2 30h9.6"/>
-            </g>
-          </svg>
-        </span>
-        <h3><span data-lang="ms">Penyelesaian Data &amp; AI Menyeluruh</span><span data-lang="en">End-to-End Data &amp; AI Solutions</span></h3>
-        <p><span data-lang="ms">Kami bina solusi yang tepat untuk membantu perniagaan anda — dari integrasi data ke AI generatif.</span><span data-lang="en">We build the right solution for your business — from data integration to generative AI.</span></p>
-      </article>
-
-      <article class="card reveal">
-        <span class="hexicon" aria-hidden="true">
-          <svg viewBox="0 0 48 48" focusable="false">
-            <path class="hexicon__frame" d="M15 3h18l9 21-9 21H15L6 24Z"/>
-            <g class="hexicon__glyph" transform="translate(1.2 1.2) scale(0.95)">
-              <circle cx="24" cy="20" r="7"/>
-              <path d="M20.5 20.4l2.6 2.6 4.6-5"/>
-              <path d="M19.5 26.6 17 36l7-3.4L31 36l-2.5-9.4"/>
-            </g>
-          </svg>
-        </span>
-        <h3><span data-lang="ms">Pakar Berpengalaman, Hasil Terbukti</span><span data-lang="en">Experienced Experts, Proven Results</span></h3>
-        <p><span data-lang="ms">Pasukan profesional yang bertauliah dengan rekod kejayaan dalam pelbagai industri.</span><span data-lang="en">A certified professional team with a track record of success across industries.</span></p>
-      </article>
-
-      <article class="card reveal">
-        <span class="hexicon" aria-hidden="true">
-          <svg viewBox="0 0 48 48" focusable="false">
-            <path class="hexicon__frame" d="M15 3h18l9 21-9 21H15L6 24Z"/>
-            <g class="hexicon__glyph" transform="translate(1.2 1.2) scale(0.95)">
-              <path d="M13 19h14M23 15l4 4-4 4"/>
-              <path d="M35 29H21M25 25l-4 4 4 4"/>
-            </g>
-          </svg>
-        </span>
-        <h3><span data-lang="ms">Rakan Strategik, Bukan Sekadar Vendor</span><span data-lang="en">A Strategic Partner, Not Just a Vendor</span></h3>
-        <p><span data-lang="ms">Kami komited bantu anda menempuh perjalanan data &amp; AI dari awal sehingga akhir.</span><span data-lang="en">We're committed to supporting your data &amp; AI journey from start to finish.</span></p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SERVICES ============ -->
-<section class="section section--alt" id="services">
-  <div class="wrap">
-    <header class="shead">
-      <p class="eyebrow"><span data-lang="ms">Perkhidmatan</span><span data-lang="en">Services</span></p>
-      <h2><span data-lang="ms">Perkhidmatan Kami</span><span data-lang="en">Our Services</span></h2>
-    </header>
-
-    <ol class="svclist">
-      <li class="svc reveal">
-        <div class="svc__badges">
-          <span class="hexicon hexicon--solid" aria-hidden="true">
-            <svg viewBox="0 0 48 48" focusable="false">
-              <path class="hexicon__frame" d="M15 3h18l9 21-9 21H15L6 24Z"/>
-              <g class="hexicon__glyph" transform="translate(1.2 1.2) scale(0.95)">
-                <path d="M24 12l2.6 6.4L33 21l-6.4 2.6L24 30l-2.6-6.4L15 21l6.4-2.6Z"/>
-                <path d="M32.5 30l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2Z"/>
-              </g>
-            </svg>
-          </span>
-          <span class="numbadge" aria-hidden="true">01</span>
-        </div>
-        <h3 class="svc__h"><span data-lang="ms">Generative AI Deployment</span><span data-lang="en">Generative AI Deployment</span></h3>
-        <div class="svc__text">
-          <p><span data-lang="ms">Kami membuat penerapan sistem kecerdasan AI yang komprehensif dari sistem infrastruktur sehingga ke antaramuka pengguna (user interface), supaya klien dapat memanfaatkan cara kerja yang terkehadapan.</span><span data-lang="en">We deploy comprehensive AI systems, from backend infrastructure through to the user interface, so clients can put next-generation ways of working to use.</span></p>
-        </div>
-      </li>
-
-      <li class="svc reveal">
-        <div class="svc__badges">
-          <span class="hexicon hexicon--solid" aria-hidden="true">
-            <svg viewBox="0 0 48 48" focusable="false">
-              <path class="hexicon__frame" d="M15 3h18l9 21-9 21H15L6 24Z"/>
-              <g class="hexicon__glyph" transform="translate(1.2 1.2) scale(0.95)">
-                <ellipse cx="24" cy="15" rx="9" ry="3.4"/>
-                <path d="M15 15v8c0 1.9 4 3.4 9 3.4s9-1.5 9-3.4v-8"/>
-                <path d="M15 23v8c0 1.9 4 3.4 9 3.4s9-1.5 9-3.4v-8"/>
-              </g>
-            </svg>
-          </span>
-          <span class="numbadge" aria-hidden="true">02</span>
-        </div>
-        <h3 class="svc__h"><span data-lang="ms">Data Warehousing / Gudang Data</span><span data-lang="en">Data Warehousing</span></h3>
-        <div class="svc__text">
-          <p><span data-lang="ms">Kami menawarkan perkhidmatan end-to-end data warehousing supaya klien dapat memanfaatkan Big Data Analytics secara bijak dan berautomasi tinggi.</span><span data-lang="en">We offer end-to-end data warehousing so clients can put Big Data Analytics to work, intelligently and with high automation.</span></p>
-        </div>
-      </li>
-
-      <li class="svc reveal">
-        <div class="svc__badges">
-          <span class="hexicon hexicon--solid" aria-hidden="true">
-            <svg viewBox="0 0 48 48" focusable="false">
-              <path class="hexicon__frame" d="M15 3h18l9 21-9 21H15L6 24Z"/>
-              <g class="hexicon__glyph" transform="translate(1.2 1.2) scale(0.95)">
-                <path d="M24 13l11 5-11 5-11-5Z"/>
-                <path d="M17 20.2V27c0 2 3.1 3.4 7 3.4s7-1.4 7-3.4v-6.8"/>
-                <path d="M35 18v7"/>
-              </g>
-            </svg>
-          </span>
-          <span class="numbadge" aria-hidden="true">03</span>
-        </div>
-        <h3 class="svc__h"><span data-lang="ms">Latihan Data &amp; AI</span><span data-lang="en">Data &amp; AI Training</span></h3>
-        <div class="svc__text">
-          <p><span data-lang="ms">Jurulatih pakar kami yang bertauliah menerapkan pelbagai skil yang penting dalam bidang data &amp; AI, dari paling asas sehingga kompetensi tahap tinggi.</span><span data-lang="en">Our certified expert trainers build the essential skills in data &amp; AI, from the fundamentals through to advanced competency.</span></p>
-
-          <div class="stats">
-            <div class="stat stat--amber">
-              <span class="stat__fig">100%</span>
-              <span class="stat__lab">
-                <span data-lang="ms">“Disyorkan” oleh peserta</span>
-                <span data-lang="en">“Recommended” by participants</span>
-              </span>
-            </div>
-            <div class="stat">
-              <span class="stat__fig" aria-hidden="true">★★★★★</span>
-              <span class="stat__lab">
-                <span data-lang="ms">Rating 5 bintang daripada 90% peserta</span>
-                <span data-lang="en">5-star rating from 90% of participants</span>
-              </span>
-            </div>
-          </div>
-        </div>
-      </li>
-    </ol>
-  </div>
-</section>
-
-<!-- ============ TRACK RECORD ============ -->
-<section class="section" id="track">
-  <div class="wrap">
-    <header class="shead shead--split">
+    <header class="clients__head">
       <div>
         <p class="eyebrow"><span data-lang="ms">Rekod Kami</span><span data-lang="en">Track Record</span></p>
-        <h2>
+        <h2 class="clients__title">
           <span data-lang="ms">Tim Kami Berpengalaman Dalam Sistem Data &amp; AI</span>
           <span data-lang="en">Our Track Record in Data &amp; AI Systems</span>
         </h2>
-        <p class="shead__lede">
+        <p class="clients__lede">
           <span data-lang="ms">Sebahagian daripada penglibatan kami.</span>
           <span data-lang="en">A selection of our engagements.</span>
         </p>
@@ -338,6 +234,345 @@
   </div>
 </section>
 
+<!-- ============ PRODUCTS ============
+     Each product's "Visit" link is an <a> with NO href on purpose: it renders
+     as an inert placeholder with a "coming soon" note. When a product's site is
+     ready, add href="https://…" to its .plink — the note hides itself and the
+     button becomes live. No other change needed. -->
+<section class="section section--paper" id="products">
+  <div class="wrap">
+    <header class="shead shead--center">
+      <p class="eyebrow"><span data-lang="ms">Produk</span><span data-lang="en">Products</span></p>
+      <h2><span data-lang="ms">Produk yang kami bina</span><span data-lang="en">Products we've built</span></h2>
+      <p class="shead__lede">
+        <span data-lang="ms">Penyelesaian sedia guna, dibina daripada kepakaran data &amp; AI yang sama yang kami bawa ke setiap projek klien.</span>
+        <span data-lang="en">Ready-to-use solutions, built on the same data &amp; AI expertise we bring to every client project.</span>
+      </p>
+      <p class="shead__note">
+        <span data-lang="ms">Tangkapan skrin menggunakan data demo.</span>
+        <span data-lang="en">Screenshots show demo data.</span>
+      </p>
+    </header>
+
+    <div class="prods">
+
+      <!-- ---------- OneGo ---------- -->
+      <article class="prod prod--onego reveal" id="onego" aria-labelledby="onego-name">
+        <div class="prod__media">
+          <figure class="frame prod__shot">
+            <div class="frame__bar"><i></i><i></i><i></i></div>
+            <img src="products/onego-overview.webp" width="1600" height="1000" loading="lazy" decoding="async"
+                 alt="Papan pemuka OneGo: hasil bersih, pesanan dan pelanggan, serta hasil bulanan mengikut saluran jualan"
+                 data-alt-ms="Papan pemuka OneGo: hasil bersih, pesanan dan pelanggan, serta hasil bulanan mengikut saluran jualan"
+                 data-alt-en="OneGo dashboard: net revenue, orders and customers, plus monthly revenue by sales channel">
+          </figure>
+          <figure class="frame frame--sm prod__inset">
+            <img src="products/onego-matching.webp" width="960" height="600" loading="lazy" decoding="async"
+                 alt="Skrin padanan produk OneGo: peratus hasil yang dipadankan bagi setiap saluran"
+                 data-alt-ms="Skrin padanan produk OneGo: peratus hasil yang dipadankan bagi setiap saluran"
+                 data-alt-en="OneGo product matching screen: share of revenue matched per channel">
+          </figure>
+        </div>
+
+        <div class="prod__body">
+          <p class="prod__kicker">
+            <span data-lang="ms">Analitik jualan pelbagai saluran</span>
+            <span data-lang="en">Multi-channel sales analytics</span>
+          </p>
+          <h3 class="prod__name" id="onego-name">
+            <svg class="prod__mark" aria-hidden="true" focusable="false"><use href="#mk-onego"/></svg>
+            OneGo
+          </h3>
+          <p class="prod__lede">
+            <span data-lang="ms">Satukan data jualan dari Shopee, TikTok Shop dan Shopify ke dalam satu papan pemuka yang sentiasa terkini — tanpa perlu mencantum hamparan secara manual setiap bulan.</span>
+            <span data-lang="en">Bring your Shopee, TikTok Shop and Shopify sales into one dashboard that stays current — no more stitching spreadsheets together every month.</span>
+          </p>
+          <ul class="prod__feats">
+            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+              <span data-lang="ms">Muat naik eksport terus — rekod berulang dan tempoh bertindih dikesan secara automatik</span>
+              <span data-lang="en">Drop in raw exports — duplicates and overlapping periods are caught automatically</span></li>
+            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+              <span data-lang="ms">Padanan produk pintar merentas SKU setiap saluran</span>
+              <span data-lang="en">Smart product matching across every channel's SKUs</span></li>
+            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+              <span data-lang="ms">Papan pemuka jualan, produk dan pemulangan yang boleh anda ubah suai sendiri</span>
+              <span data-lang="en">Sales, product and returns dashboards you can tailor yourself</span></li>
+          </ul>
+          <div class="prod__cta">
+            <a class="plink" data-product="onego">
+              <span data-lang="ms">Lawati OneGo</span><span data-lang="en">Visit OneGo</span>
+              <svg aria-hidden="true" focusable="false"><use href="#ico-arrow"/></svg>
+            </a>
+            <span class="plink__soon"><span data-lang="ms">Pautan akan datang</span><span data-lang="en">Link coming soon</span></span>
+            <a class="prod__ask" href="#contact"><span data-lang="ms">Tanya kami tentang OneGo</span><span data-lang="en">Ask us about OneGo</span></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ---------- Whizzard ---------- -->
+      <article class="prod prod--whizzard prod--flip reveal" id="whizzard" aria-labelledby="whizzard-name">
+        <div class="prod__media">
+          <figure class="frame prod__shot">
+            <div class="frame__bar"><i></i><i></i><i></i></div>
+            <img src="products/whizzard-verified.webp" width="1600" height="1000" loading="lazy" decoding="async"
+                 alt="Whizzard: pesanan penghantaran yang diimbas di sebelah data yang telah diekstrak dan disahkan"
+                 data-alt-ms="Whizzard: pesanan penghantaran yang diimbas di sebelah data yang telah diekstrak dan disahkan"
+                 data-alt-en="Whizzard: a scanned delivery order beside the extracted, verified data">
+          </figure>
+          <figure class="frame frame--sm prod__inset">
+            <img src="products/whizzard-documents.webp" width="960" height="600" loading="lazy" decoding="async"
+                 alt="Senarai dokumen Whizzard dengan status setiap borang"
+                 data-alt-ms="Senarai dokumen Whizzard dengan status setiap borang"
+                 data-alt-en="Whizzard document list showing each form's status">
+          </figure>
+        </div>
+
+        <div class="prod__body">
+          <p class="prod__kicker">
+            <span data-lang="ms">Pendigitalan borang dengan AI</span>
+            <span data-lang="en">AI form digitisation</span>
+          </p>
+          <h3 class="prod__name" id="whizzard-name">
+            <svg class="prod__mark" aria-hidden="true" focusable="false"><use href="#mk-whizzard"/></svg>
+            Whizzard
+          </h3>
+          <p class="prod__lede">
+            <span data-lang="ms">Ambil gambar borang kertas, dan Whizzard menukarnya kepada data berstruktur yang telah disemak — sedia untuk dieksport ke sistem anda.</span>
+            <span data-lang="en">Photograph a paper form and Whizzard turns it into clean, checked, structured data — ready to export into your own systems.</span>
+          </p>
+          <ul class="prod__feats">
+            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+              <span data-lang="ms">Imbas dari telefon — beberapa foto atau satu PDF menjadi satu dokumen</span>
+              <span data-lang="en">Scan from a phone — several photos or one PDF become one document</span></li>
+            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+              <span data-lang="ms">Sediakan jenis borang baharu daripada satu sampel — AI mencadangkan medannya</span>
+              <span data-lang="en">Set up a new form type from one sample — the AI proposes the fields</span></li>
+            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+              <span data-lang="ms">Semakan automatik menanda nilai yang meragukan untuk disahkan oleh manusia</span>
+              <span data-lang="en">Automatic checks flag doubtful values for a person to verify</span></li>
+          </ul>
+          <div class="prod__cta">
+            <a class="plink" data-product="whizzard">
+              <span data-lang="ms">Lawati Whizzard</span><span data-lang="en">Visit Whizzard</span>
+              <svg aria-hidden="true" focusable="false"><use href="#ico-arrow"/></svg>
+            </a>
+            <span class="plink__soon"><span data-lang="ms">Pautan akan datang</span><span data-lang="en">Link coming soon</span></span>
+            <a class="prod__ask" href="#contact"><span data-lang="ms">Tanya kami tentang Whizzard</span><span data-lang="en">Ask us about Whizzard</span></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ---------- Smart Tahfiz ---------- -->
+      <article class="prod prod--tahfiz reveal" id="smart-tahfiz" aria-labelledby="tahfiz-name">
+        <div class="prod__media">
+          <figure class="frame prod__shot">
+            <div class="frame__bar"><i></i><i></i><i></i></div>
+            <img src="products/smart-tahfiz-dashboard.webp" width="1600" height="1000" loading="lazy" decoding="async"
+                 alt="Papan pemuka Smart Tahfiz: pelajar aktif, kehadiran bulanan, purata juzuk dan kehadiran tujuh hari"
+                 data-alt-ms="Papan pemuka Smart Tahfiz: pelajar aktif, kehadiran bulanan, purata juzuk dan kehadiran tujuh hari"
+                 data-alt-en="Smart Tahfiz dashboard: active students, monthly attendance, average juzuk and seven-day attendance">
+          </figure>
+          <figure class="frame frame--sm prod__inset">
+            <img src="products/smart-tahfiz-hafazan.webp" width="960" height="600" loading="lazy" decoding="async"
+                 alt="Rekod hafazan Smart Tahfiz: ringkasan kemajuan pelajar mengikut juzuk"
+                 data-alt-ms="Rekod hafazan Smart Tahfiz: ringkasan kemajuan pelajar mengikut juzuk"
+                 data-alt-en="Smart Tahfiz hafazan record: a student's progress summary by juzuk">
+          </figure>
+        </div>
+
+        <div class="prod__body">
+          <p class="prod__kicker">
+            <span data-lang="ms">Sistem Sekolah Pintar</span>
+            <span data-lang="en">Smart School System</span>
+          </p>
+          <h3 class="prod__name" id="tahfiz-name">
+            <svg class="prod__mark" aria-hidden="true" focusable="false"><use href="#mk-tahfiz"/></svg>
+            Smart Tahfiz
+          </h3>
+          <p class="prod__lede">
+            <span data-lang="ms">Sistem pengurusan sekolah tahfiz yang menyeluruh — jejak hafazan hingga ke peringkat ayat, rekod kehadiran, dan pantau setiap sekolah dari satu portal.</span>
+            <span data-lang="en">End-to-end management for tahfiz schools — track hafazan down to the ayat, record attendance, and oversee every school from one portal.</span>
+          </p>
+          <ul class="prod__feats">
+            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+              <span data-lang="ms">Rekod hafazan mengikut ayat, dengan kemajuan hafalan pertama dan ulangan</span>
+              <span data-lang="en">Ayat-level hafazan records, with first-pass and revision progress</span></li>
+            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+              <span data-lang="ms">Kehadiran harian bagi sesi pagi dan petang</span>
+              <span data-lang="en">Daily attendance for morning and afternoon sessions</span></li>
+            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+              <span data-lang="ms">Akses mengikut peranan untuk guru, pentadbir sekolah, pengurusan dan pelajar</span>
+              <span data-lang="en">Role-based access for teachers, school admins, management and students</span></li>
+          </ul>
+          <div class="prod__cta">
+            <a class="plink" data-product="smart-tahfiz">
+              <span data-lang="ms">Lawati Smart Tahfiz</span><span data-lang="en">Visit Smart Tahfiz</span>
+              <svg aria-hidden="true" focusable="false"><use href="#ico-arrow"/></svg>
+            </a>
+            <span class="plink__soon"><span data-lang="ms">Pautan akan datang</span><span data-lang="en">Link coming soon</span></span>
+            <a class="prod__ask" href="#contact"><span data-lang="ms">Tanya kami tentang Smart Tahfiz</span><span data-lang="en">Ask us about Smart Tahfiz</span></a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="section" id="services">
+  <div class="wrap">
+    <header class="shead">
+      <p class="eyebrow"><span data-lang="ms">Perkhidmatan</span><span data-lang="en">Services</span></p>
+      <h2><span data-lang="ms">Perkhidmatan Kami</span><span data-lang="en">Our Services</span></h2>
+    </header>
+
+    <ol class="grid grid--3 svcgrid">
+      <li class="card svc reveal">
+        <div class="svc__top">
+          <span class="hexicon hexicon--solid" aria-hidden="true">
+            <svg viewBox="0 0 48 48" focusable="false">
+              <path class="hexicon__frame" d="M15 3h18l9 21-9 21H15L6 24Z"/>
+              <g class="hexicon__glyph" transform="translate(1.2 1.2) scale(0.95)">
+                <path d="M24 12l2.6 6.4L33 21l-6.4 2.6L24 30l-2.6-6.4L15 21l6.4-2.6Z"/>
+                <path d="M32.5 30l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2Z"/>
+              </g>
+            </svg>
+          </span>
+          <span class="svc__num" aria-hidden="true">01</span>
+        </div>
+        <h3><span data-lang="ms">Generative AI Deployment</span><span data-lang="en">Generative AI Deployment</span></h3>
+        <p><span data-lang="ms">Kami membuat penerapan sistem kecerdasan AI yang komprehensif dari sistem infrastruktur sehingga ke antaramuka pengguna (user interface), supaya klien dapat memanfaatkan cara kerja yang terkehadapan.</span><span data-lang="en">We deploy comprehensive AI systems, from backend infrastructure through to the user interface, so clients can put next-generation ways of working to use.</span></p>
+      </li>
+
+      <li class="card svc reveal">
+        <div class="svc__top">
+          <span class="hexicon hexicon--solid" aria-hidden="true">
+            <svg viewBox="0 0 48 48" focusable="false">
+              <path class="hexicon__frame" d="M15 3h18l9 21-9 21H15L6 24Z"/>
+              <g class="hexicon__glyph" transform="translate(1.2 1.2) scale(0.95)">
+                <ellipse cx="24" cy="15" rx="9" ry="3.4"/>
+                <path d="M15 15v8c0 1.9 4 3.4 9 3.4s9-1.5 9-3.4v-8"/>
+                <path d="M15 23v8c0 1.9 4 3.4 9 3.4s9-1.5 9-3.4v-8"/>
+              </g>
+            </svg>
+          </span>
+          <span class="svc__num" aria-hidden="true">02</span>
+        </div>
+        <h3><span data-lang="ms">Data Warehousing / Gudang Data</span><span data-lang="en">Data Warehousing</span></h3>
+        <p><span data-lang="ms">Kami menawarkan perkhidmatan end-to-end data warehousing supaya klien dapat memanfaatkan Big Data Analytics secara bijak dan berautomasi tinggi.</span><span data-lang="en">We offer end-to-end data warehousing so clients can put Big Data Analytics to work, intelligently and with high automation.</span></p>
+      </li>
+
+      <li class="card svc reveal">
+        <div class="svc__top">
+          <span class="hexicon hexicon--solid" aria-hidden="true">
+            <svg viewBox="0 0 48 48" focusable="false">
+              <path class="hexicon__frame" d="M15 3h18l9 21-9 21H15L6 24Z"/>
+              <g class="hexicon__glyph" transform="translate(1.2 1.2) scale(0.95)">
+                <path d="M24 13l11 5-11 5-11-5Z"/>
+                <path d="M17 20.2V27c0 2 3.1 3.4 7 3.4s7-1.4 7-3.4v-6.8"/>
+                <path d="M35 18v7"/>
+              </g>
+            </svg>
+          </span>
+          <span class="svc__num" aria-hidden="true">03</span>
+        </div>
+        <h3><span data-lang="ms">Latihan Data &amp; AI</span><span data-lang="en">Data &amp; AI Training</span></h3>
+        <p><span data-lang="ms">Jurulatih pakar kami yang bertauliah menerapkan pelbagai skil yang penting dalam bidang data &amp; AI, dari paling asas sehingga kompetensi tahap tinggi.</span><span data-lang="en">Our certified expert trainers build the essential skills in data &amp; AI, from the fundamentals through to advanced competency.</span></p>
+      </li>
+    </ol>
+
+    <div class="proof reveal">
+      <p class="proof__lab">
+        <span data-lang="ms">Maklum balas peserta latihan</span>
+        <span data-lang="en">Training participant feedback</span>
+      </p>
+      <div class="stats">
+        <div class="stat stat--amber">
+          <span class="stat__fig">100%</span>
+          <span class="stat__lab">
+            <span data-lang="ms">“Disyorkan” oleh peserta</span>
+            <span data-lang="en">“Recommended” by participants</span>
+          </span>
+        </div>
+        <div class="stat">
+          <span class="stat__fig" aria-hidden="true">★★★★★</span>
+          <span class="stat__lab">
+            <span data-lang="ms">Rating 5 bintang daripada 90% peserta</span>
+            <span data-lang="en">5-star rating from 90% of participants</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY US ============ -->
+<section class="section section--paper" id="why">
+  <div class="wrap why">
+    <header class="shead why__head">
+      <p class="eyebrow"><span data-lang="ms">Mengapa Kami</span><span data-lang="en">Why Us</span></p>
+      <h2><span data-lang="ms">Mengapa Pilih Kami</span><span data-lang="en">Why Choose Us</span></h2>
+      <a class="btn btn--navy" href="#contact">
+        <span data-lang="ms">Bincang projek anda</span>
+        <span data-lang="en">Discuss your project</span>
+        <svg aria-hidden="true" focusable="false"><use href="#ico-arrow"/></svg>
+      </a>
+    </header>
+
+    <ul class="why__list">
+      <li class="whyitem reveal">
+        <span class="hexicon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" focusable="false">
+            <path class="hexicon__frame" d="M15 3h18l9 21-9 21H15L6 24Z"/>
+            <g class="hexicon__glyph" transform="translate(1.2 1.2) scale(0.95)">
+              <circle cx="24" cy="16" r="3.2"/><circle cx="16" cy="30" r="3.2"/><circle cx="32" cy="30" r="3.2"/>
+              <path d="M22 18.7 17.8 27M26 18.7 30.2 27M19.2 30h9.6"/>
+            </g>
+          </svg>
+        </span>
+        <div>
+          <h3><span data-lang="ms">Penyelesaian Data &amp; AI Menyeluruh</span><span data-lang="en">End-to-End Data &amp; AI Solutions</span></h3>
+          <p><span data-lang="ms">Kami bina solusi yang tepat untuk membantu perniagaan anda — dari integrasi data ke AI generatif.</span><span data-lang="en">We build the right solution for your business — from data integration to generative AI.</span></p>
+        </div>
+      </li>
+
+      <li class="whyitem reveal">
+        <span class="hexicon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" focusable="false">
+            <path class="hexicon__frame" d="M15 3h18l9 21-9 21H15L6 24Z"/>
+            <g class="hexicon__glyph" transform="translate(1.2 1.2) scale(0.95)">
+              <circle cx="24" cy="20" r="7"/>
+              <path d="M20.5 20.4l2.6 2.6 4.6-5"/>
+              <path d="M19.5 26.6 17 36l7-3.4L31 36l-2.5-9.4"/>
+            </g>
+          </svg>
+        </span>
+        <div>
+          <h3><span data-lang="ms">Pakar Berpengalaman, Hasil Terbukti</span><span data-lang="en">Experienced Experts, Proven Results</span></h3>
+          <p><span data-lang="ms">Pasukan profesional yang bertauliah dengan rekod kejayaan dalam pelbagai industri.</span><span data-lang="en">A certified professional team with a track record of success across industries.</span></p>
+        </div>
+      </li>
+
+      <li class="whyitem reveal">
+        <span class="hexicon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" focusable="false">
+            <path class="hexicon__frame" d="M15 3h18l9 21-9 21H15L6 24Z"/>
+            <g class="hexicon__glyph" transform="translate(1.2 1.2) scale(0.95)">
+              <path d="M13 19h14M23 15l4 4-4 4"/>
+              <path d="M35 29H21M25 25l-4 4 4 4"/>
+            </g>
+          </svg>
+        </span>
+        <div>
+          <h3><span data-lang="ms">Rakan Strategik, Bukan Sekadar Vendor</span><span data-lang="en">A Strategic Partner, Not Just a Vendor</span></h3>
+          <p><span data-lang="ms">Kami komited bantu anda menempuh perjalanan data &amp; AI dari awal sehingga akhir.</span><span data-lang="en">We're committed to supporting your data &amp; AI journey from start to finish.</span></p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
 </main>
 
 <!-- ============ FOOTER / CONTACT ============ -->
@@ -376,6 +611,25 @@
         <span class="foot__wanum">+6011-6125 2399</span>
       </li>
     </ul>
+  </div>
+
+  <div class="wrap foot__links">
+    <div class="foot__col">
+      <p class="foot__lab"><span data-lang="ms">Produk</span><span data-lang="en">Products</span></p>
+      <ul>
+        <li><a href="#onego">OneGo</a></li>
+        <li><a href="#whizzard">Whizzard</a></li>
+        <li><a href="#smart-tahfiz">Smart Tahfiz</a></li>
+      </ul>
+    </div>
+    <div class="foot__col">
+      <p class="foot__lab"><span data-lang="ms">Perkhidmatan</span><span data-lang="en">Services</span></p>
+      <ul>
+        <li><a href="#services">Generative AI Deployment</a></li>
+        <li><a href="#services"><span data-lang="ms">Gudang Data</span><span data-lang="en">Data Warehousing</span></a></li>
+        <li><a href="#services"><span data-lang="ms">Latihan Data &amp; AI</span><span data-lang="en">Data &amp; AI Training</span></a></li>
+      </ul>
+    </div>
   </div>
 
   <div class="wrap foot__base">

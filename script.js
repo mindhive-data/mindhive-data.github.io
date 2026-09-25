@@ -41,6 +41,11 @@
   var ogTitle = document.querySelector('meta[property="og:title"]');
   var ogDesc = document.querySelector('meta[property="og:description"]');
   var ogLocale = document.querySelector('meta[property="og:locale"]');
+  /* alt text can't be toggled with CSS, so screenshots carry both
+     languages as data attributes; the markup's alt is the BM default. */
+  var altImgs = Array.prototype.slice.call(
+    document.querySelectorAll('img[data-alt-ms][data-alt-en]')
+  );
 
   function setLang(lang, updateUrl) {
     if (lang !== 'en') lang = 'ms';
@@ -53,6 +58,9 @@
     if (ogDesc) ogDesc.setAttribute('content', m.desc);
     if (ogLocale) ogLocale.setAttribute('content', m.locale);
     if (navEl) navEl.setAttribute('aria-label', m.navLabel);
+    altImgs.forEach(function (img) {
+      img.setAttribute('alt', img.getAttribute('data-alt-' + lang));
+    });
 
     langButtons.forEach(function (btn) {
       btn.setAttribute('aria-pressed', String(btn.dataset.setlang === lang));
@@ -163,7 +171,37 @@
   }
 
   /* ---------------------------------------------------------
-     6. Copyright year (both language variants)
+     6. Nav: underline the link for the section in view.
+     The observed band is a thin strip across the middle of the
+     viewport, so exactly one section holds it at a time.
+     --------------------------------------------------------- */
+  var navLinks = navEl
+    ? Array.prototype.slice.call(navEl.querySelectorAll('a[href^="#"]'))
+    : [];
+
+  if (navLinks.length && 'IntersectionObserver' in window) {
+    var linkFor = {};
+    navLinks.forEach(function (a) { linkFor[a.getAttribute('href').slice(1)] = a; });
+
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var link = linkFor[entry.target.id];
+        if (entry.isIntersecting) {
+          navLinks.forEach(function (a) { a.classList.toggle('is-active', a === link); });
+        } else {
+          link.classList.remove('is-active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+
+    Object.keys(linkFor).forEach(function (id) {
+      var section = document.getElementById(id);
+      if (section) spy.observe(section);
+    });
+  }
+
+  /* ---------------------------------------------------------
+     7. Copyright year (both language variants)
      --------------------------------------------------------- */
   var year = String(new Date().getFullYear());
   ['yr', 'yr-en'].forEach(function (id) {

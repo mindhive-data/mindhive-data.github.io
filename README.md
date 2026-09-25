@@ -11,11 +11,15 @@ Static site, no build step, served by GitHub Pages from the root of `main`.
 | --- | --- |
 | `index.html` | The whole page. Both languages live in the markup, tagged `data-lang="ms"` / `data-lang="en"`. |
 | `styles.css` | Design tokens + all styling. No preprocessor. |
-| `script.js` | Language switch, mobile nav, scroll reveal. Vanilla, ~150 lines. |
+| `script.js` | Language switch, mobile nav, scroll reveal, nav scrollspy. Vanilla, ~210 lines. |
 | `logo.png` | Horizontal logo lockup, colour, transparent (nav). 454×132. |
 | `logo-white.png` | Same lockup reversed to white, for the navy footer. |
 | `favicon.png` | Logo mark on a navy rounded square. 256×256. |
 | `clients/*.png` | The ten client logos in the carousel, transparent. |
+| `products/*.webp` | Product screenshots — one main (1600×1000) and one inset (960×600) per product. |
+
+Page order: hero (with the three products fanned as its artwork) → client
+strip → **Products** → Services → Why Us → contact footer.
 | `.nojekyll` | Tells Pages to serve files as-is (no Jekyll build). |
 
 ## Logo assets
@@ -54,6 +58,60 @@ focus, and via the Pause button (WCAG 2.2.2). Under
 `prefers-reduced-motion: reduce` it stops entirely and reflows into a static
 wrapped grid showing every logo at once.
 
+## Products
+
+Three products, each with its own row in `#products` (`#onego`, `#whizzard`,
+`#smart-tahfiz`) and a chip in the hero and footer that jumps to it:
+
+| Product | What it is |
+| --- | --- |
+| **OneGo** | Multi-channel sales analytics (Shopee / TikTok Shop / Shopify → one dashboard) |
+| **Whizzard** | AI form digitisation — photo of a paper form → checked, structured data |
+| **Smart Tahfiz** | Smart School System — hafazan, attendance and school management for tahfiz schools |
+
+### Product links (not live yet)
+
+Each product's **Visit** button is an `<a class="plink">` with **no `href`**, on
+purpose. An `<a>` without `href` is a placeholder link: it can't be clicked
+through or tabbed to, the CSS draws it as a dashed outline, and a
+"Pautan akan datang / Link coming soon" note sits beside it.
+
+When a product's site is ready, add the URL and nothing else:
+
+```html
+<a class="plink" data-product="onego" href="https://…">
+```
+
+The button switches to a solid fill in the product's colour and the
+"coming soon" note hides itself (`.plink[href] + .plink__soon`). The
+"Tanya kami / Ask us" link under each button goes to the contact section.
+
+### Screenshots
+
+Captured from each app running locally on its own **demo data** (the section
+says so on the page), at 1280×800 and 2× density, then cropped to 16:10 and saved
+as WebP. The same three main shots are reused as the hero artwork, so the page
+downloads each only once.
+
+- **OneGo** — the repo's synthetic sample corpus (`sample/sample-data.zip`) loaded
+  through Connections; Overview + Product matching.
+- **Whizzard** — the seeded synthetic delivery orders, approved through the
+  reviewer flow; a verified document + the Documents list.
+- **Smart Tahfiz** — the demo school from the repo's seed migrations, with a
+  month of demo attendance added; the teacher dashboard + a hafazan juzuk
+  summary. **Cropped to the main content area on purpose:** the app's sidebar
+  carries a client's crest and name, which don't belong on Mindhive's site.
+
+To replace a screenshot, keep the file name and the 16:10 ratio (1600×1000 main,
+960×600 inset) and nothing in the markup needs to change. Each `<img>` has
+`data-alt-ms` / `data-alt-en`; `script.js` swaps `alt` when the language changes,
+so update both if a picture's content changes.
+
+Each product has its own accent (taken from its UI) as four custom properties on
+`.prod--onego` / `.prod--whizzard` / `.prod--tahfiz` in `styles.css`. The product
+marks live once as `<symbol>`s at the top of `index.html` (`#mk-onego`,
+`#mk-whizzard`, `#mk-tahfiz`) and are reused everywhere with `<use>`.
+
 ## Editing content
 
 Every translatable string appears twice, side by side:
@@ -75,7 +133,8 @@ Every translatable string appears twice, side by side:
 
 Because the rule only ever *adds* `display: none`, elements keep their natural
 layout and Bahasa Malaysia renders correctly even with JavaScript disabled.
-`script.js` only flips the `lang` attribute and syncs `<title>` / meta tags.
+`script.js` only flips the `lang` attribute and syncs `<title>` / meta tags
+and screenshot `alt` text.
 
 Deep-link to English with `?lang=en` — e.g. https://mindhive-data.github.io/?lang=en
 
@@ -104,12 +163,13 @@ Defined once at the top of `styles.css` under `:root`:
 
 - Navy `#00293F` · Mid blue `#2D5F9C` · Off-white `#F7F9FC` · Slate `#35424E`
 - Accent amber `#F5A623` — used sparingly (one hero word, primary CTA, one stat, one honeycomb cell)
-- Category pill green `#17805B`
+- Product accents: OneGo honey `#B07314`, Whizzard blue `#2F5BEA`, Smart Tahfiz green `#1A5C38`
 - Space Grotesk (display) + Inter (body), loaded from Google Fonts
 
-The hexagon/honeycomb is the brand motif: the hero's 7-cell "flower", the
-outline frames around every service icon, the tiling `<pattern id="comb">`
-behind the hero and footer, and the bullet on each category pill.
+The hexagon/honeycomb is the brand motif: the amber cell behind the hero's
+product stack, the outline frames around every service and "why us" icon, the
+hexagonal product marks, and the tiling `<pattern id="comb">` behind the hero
+and footer.
 
 ## Local preview
 
