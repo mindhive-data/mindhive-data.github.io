@@ -11,16 +11,16 @@ Static site, no build step, served by GitHub Pages from the root of `main`.
 | --- | --- |
 | `index.html` | The whole page. Both languages live in the markup, tagged `data-lang="ms"` / `data-lang="en"`. |
 | `styles.css` | Design tokens + all styling. No preprocessor. |
-| `script.js` | Language switch, mobile nav, scroll reveal, nav scrollspy. Vanilla, ~210 lines. |
+| `script.js` | Language switch, mobile nav, scroll reveal, product carousel, nav scrollspy. Vanilla, ~320 lines. |
 | `logo.png` | Horizontal logo lockup, colour, transparent (nav). 454×132. |
 | `logo-white.png` | Same lockup reversed to white, for the navy footer. |
 | `favicon.png` | Logo mark on a navy rounded square. 256×256. |
 | `clients/*.png` | The ten client logos in the carousel, transparent. |
 | `products/*.webp` | Product screenshots — one main (1600×1000) and one inset (960×600) per product. |
-
-Page order: hero (with the three products fanned as its artwork) → client
-strip → **Products** → Services → Why Us → contact footer.
 | `.nojekyll` | Tells Pages to serve files as-is (no Jekyll build). |
+
+Page order: hero → client strip → **Products** (carousel) → Services → Why Us →
+contact footer.
 
 ## Logo assets
 
@@ -60,8 +60,9 @@ wrapped grid showing every logo at once.
 
 ## Products
 
-Three products, each with its own row in `#products` (`#onego`, `#whizzard`,
-`#smart-tahfiz`) and a chip in the hero and footer that jumps to it:
+Three products, one slide each in the `#products` carousel (`#onego`,
+`#whizzard`, `#smart-tahfiz`), with a chip in the hero and a link in the footer
+that jump to their slide:
 
 | Product | What it is |
 | --- | --- |
@@ -86,12 +87,29 @@ The button switches to a solid fill in the product's colour and the
 "coming soon" note hides itself (`.plink[href] + .plink__soon`). The
 "Tanya kami / Ask us" link under each button goes to the contact section.
 
+### Carousel
+
+`#pcar-track` is a CSS scroll-snap strip, so swiping and trackpad scrolling work
+natively. `script.js` adds the product tabs, the arrows and the dots, and keeps
+them in step with whatever the track has scrolled to. It follows the ARIA tabs
+pattern: arrow keys, Home and End move between the tabs. Slides that aren't
+showing are `inert`, so keyboard focus never lands on a product that's
+off-screen. It doesn't auto-advance.
+
+The hero chips, the footer product links and a deep link such as
+`/#whizzard` all open the matching slide. Without JavaScript the tabs and
+arrows are hidden and the three products stack as a plain list.
+
+To add a fourth product, copy one `<article class="prod">` inside the track, add
+a matching `.pcar__tab` button (its `aria-controls` is the article's `id`) and
+one more `<i>` in `.pcar__dots`, then give it an accent block like
+`.prod--onego` in `styles.css`.
+
 ### Screenshots
 
 Captured from each app running locally on its own **demo data** (the section
 says so on the page), at 1280×800 and 2× density, then cropped to 16:10 and saved
-as WebP. The same three main shots are reused as the hero artwork, so the page
-downloads each only once.
+as WebP.
 
 - **OneGo** — the repo's synthetic sample corpus (`sample/sample-data.zip`) loaded
   through Connections; Overview + Product matching.
@@ -166,10 +184,9 @@ Defined once at the top of `styles.css` under `:root`:
 - Product accents: OneGo honey `#B07314`, Whizzard blue `#2F5BEA`, Smart Tahfiz green `#1A5C38`
 - Space Grotesk (display) + Inter (body), loaded from Google Fonts
 
-The hexagon/honeycomb is the brand motif: the amber cell behind the hero's
-product stack, the outline frames around every service and "why us" icon, the
-hexagonal product marks, and the tiling `<pattern id="comb">` behind the hero
-and footer.
+The hexagon/honeycomb is the brand motif: the hero's 7-cell "flower", the
+outline frames around every service and "why us" icon, the hexagonal product
+marks, and the tiling `<pattern id="comb">` behind the hero and footer.
 
 ## Local preview
 

@@ -152,28 +152,37 @@
       </div>
     </div>
 
-    <!-- Signature moment: the three products, stacked. Decorative here —
-         the Products section below carries the described screenshots. -->
+    <!-- Signature moment: honeycomb flower -->
     <div class="hero__art" aria-hidden="true">
-      <div class="stack">
-        <span class="stack__hex stack__hex--a"></span>
-        <span class="stack__hex stack__hex--b"></span>
-        <figure class="frame stack__card stack__card--back">
-          <div class="frame__bar"><i></i><i></i><i></i></div>
-          <img src="products/whizzard-verified.webp" width="1600" height="1000" alt="" decoding="async">
-        </figure>
-        <figure class="frame stack__card stack__card--front">
-          <div class="frame__bar"><i></i><i></i><i></i></div>
-          <img src="products/onego-overview.webp" width="1600" height="1000" alt="" fetchpriority="high" decoding="async">
-        </figure>
-        <figure class="frame stack__card stack__card--side">
-          <div class="frame__bar"><i></i><i></i><i></i></div>
-          <img src="products/smart-tahfiz-dashboard.webp" width="1600" height="1000" alt="" decoding="async">
-        </figure>
-        <span class="stack__tag stack__tag--back"><svg focusable="false"><use href="#mk-whizzard"/></svg>Whizzard</span>
-        <span class="stack__tag stack__tag--front"><svg focusable="false"><use href="#mk-onego"/></svg>OneGo</span>
-        <span class="stack__tag stack__tag--side"><svg focusable="false"><use href="#mk-tahfiz"/></svg>Smart Tahfiz</span>
-      </div>
+      <svg viewBox="-134 -144 268 288" focusable="false">
+        <defs>
+          <linearGradient id="cellA" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#3C74B6"/><stop offset="1" stop-color="#1B4272"/>
+          </linearGradient>
+          <linearGradient id="cellB" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#F7B444"/><stop offset="1" stop-color="#DE8E14"/>
+          </linearGradient>
+          <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+            <stop offset="0" stop-color="#2D5F9C" stop-opacity=".5"/>
+            <stop offset=".65" stop-color="#2D5F9C" stop-opacity=".12"/>
+            <stop offset="1" stop-color="#2D5F9C" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <circle cx="0" cy="0" r="140" fill="url(#glow)"/>
+        <circle cx="0" cy="0" r="118" fill="none" stroke="#8FC3E8" stroke-width="1" opacity=".3"/>
+        <circle cx="0" cy="0" r="134" fill="none" stroke="#8FC3E8" stroke-width="1" opacity=".14"/>
+
+        <g class="flower">
+          <path class="cell" style="--i:0" d="M-48 0 -24 -41.57 24 -41.57 48 0 24 41.57 -24 41.57Z" fill="url(#cellA)"/>
+          <path class="cell" style="--i:1" d="M24 -41.57 48 -83.14 96 -83.14 120 -41.57 96 0 48 0Z" fill="#F7F9FC" opacity=".92"/>
+          <path class="cell" style="--i:2" d="M24 41.57 48 0 96 0 120 41.57 96 83.14 48 83.14Z" fill="url(#cellB)"/>
+          <path class="cell" style="--i:3" d="M-120 -41.57 -96 -83.14 -48 -83.14 -24 -41.57 -48 0 -96 0Z" fill="none" stroke="#8FC3E8" stroke-width="1.8" opacity=".55"/>
+          <path class="cell" style="--i:4" d="M-120 41.57 -96 0 -48 0 -24 41.57 -48 83.14 -96 83.14Z" fill="#2D5F9C" opacity=".42"/>
+          <path class="cell" style="--i:5" d="M-48 -83.14 -24 -124.71 24 -124.71 48 -83.14 24 -41.57 -24 -41.57Z" fill="none" stroke="#8FC3E8" stroke-width="1.8" opacity=".38"/>
+          <path class="cell" style="--i:6" d="M-48 83.14 -24 41.57 24 41.57 48 83.14 24 124.71 -24 124.71Z" fill="#8FC3E8" opacity=".18"/>
+        </g>
+      </svg>
     </div>
   </div>
 </section>
@@ -235,6 +244,9 @@
 </section>
 
 <!-- ============ PRODUCTS ============
+     A carousel: one product per slide, picked with the tabs, the arrows or a
+     swipe (see script.js). Without JavaScript the slides simply stack.
+
      Each product's "Visit" link is an <a> with NO href on purpose: it renders
      as an inert placeholder with a "coming soon" note. When a product's site is
      ready, add href="https://…" to its .plink — the note hides itself and the
@@ -243,7 +255,7 @@
   <div class="wrap">
     <header class="shead shead--center">
       <p class="eyebrow"><span data-lang="ms">Produk</span><span data-lang="en">Products</span></p>
-      <h2><span data-lang="ms">Produk yang kami bina</span><span data-lang="en">Products we've built</span></h2>
+      <h2 id="products-title"><span data-lang="ms">Produk yang kami bina</span><span data-lang="en">Products we've built</span></h2>
       <p class="shead__lede">
         <span data-lang="ms">Penyelesaian sedia guna, dibina daripada kepakaran data &amp; AI yang sama yang kami bawa ke setiap projek klien.</span>
         <span data-lang="en">Ready-to-use solutions, built on the same data &amp; AI expertise we bring to every client project.</span>
@@ -254,167 +266,205 @@
       </p>
     </header>
 
-    <div class="prods">
+    <div class="pcar reveal" id="pcar" aria-labelledby="products-title">
+      <div class="pcar__tabs" role="tablist" aria-labelledby="products-title">
+        <button class="pcar__tab" type="button" role="tab" id="pcar-tab-onego" aria-controls="onego" aria-selected="true">
+          <svg aria-hidden="true" focusable="false"><use href="#mk-onego"/></svg>
+          <span class="pcar__tabtext">
+            <span class="pcar__tabname">OneGo</span>
+            <span class="pcar__tabkick"><span data-lang="ms">Analitik jualan</span><span data-lang="en">Sales analytics</span></span>
+          </span>
+        </button>
+        <button class="pcar__tab" type="button" role="tab" id="pcar-tab-whizzard" aria-controls="whizzard" aria-selected="false" tabindex="-1">
+          <svg aria-hidden="true" focusable="false"><use href="#mk-whizzard"/></svg>
+          <span class="pcar__tabtext">
+            <span class="pcar__tabname">Whizzard</span>
+            <span class="pcar__tabkick"><span data-lang="ms">Pendigitalan borang</span><span data-lang="en">Form digitisation</span></span>
+          </span>
+        </button>
+        <button class="pcar__tab" type="button" role="tab" id="pcar-tab-smart-tahfiz" aria-controls="smart-tahfiz" aria-selected="false" tabindex="-1">
+          <svg aria-hidden="true" focusable="false"><use href="#mk-tahfiz"/></svg>
+          <span class="pcar__tabtext">
+            <span class="pcar__tabname">Smart Tahfiz</span>
+            <span class="pcar__tabkick"><span data-lang="ms">Sistem sekolah</span><span data-lang="en">School system</span></span>
+          </span>
+        </button>
+      </div>
 
-      <!-- ---------- OneGo ---------- -->
-      <article class="prod prod--onego reveal" id="onego" aria-labelledby="onego-name">
-        <div class="prod__media">
-          <figure class="frame prod__shot">
-            <div class="frame__bar"><i></i><i></i><i></i></div>
-            <img src="products/onego-overview.webp" width="1600" height="1000" loading="lazy" decoding="async"
-                 alt="Papan pemuka OneGo: hasil bersih, pesanan dan pelanggan, serta hasil bulanan mengikut saluran jualan"
-                 data-alt-ms="Papan pemuka OneGo: hasil bersih, pesanan dan pelanggan, serta hasil bulanan mengikut saluran jualan"
-                 data-alt-en="OneGo dashboard: net revenue, orders and customers, plus monthly revenue by sales channel">
-          </figure>
-          <figure class="frame frame--sm prod__inset">
-            <img src="products/onego-matching.webp" width="960" height="600" loading="lazy" decoding="async"
-                 alt="Skrin padanan produk OneGo: peratus hasil yang dipadankan bagi setiap saluran"
-                 data-alt-ms="Skrin padanan produk OneGo: peratus hasil yang dipadankan bagi setiap saluran"
-                 data-alt-en="OneGo product matching screen: share of revenue matched per channel">
-          </figure>
-        </div>
+      <div class="pcar__track" id="pcar-track">
 
-        <div class="prod__body">
-          <p class="prod__kicker">
-            <span data-lang="ms">Analitik jualan pelbagai saluran</span>
-            <span data-lang="en">Multi-channel sales analytics</span>
-          </p>
-          <h3 class="prod__name" id="onego-name">
-            <svg class="prod__mark" aria-hidden="true" focusable="false"><use href="#mk-onego"/></svg>
-            OneGo
-          </h3>
-          <p class="prod__lede">
-            <span data-lang="ms">Satukan data jualan dari Shopee, TikTok Shop dan Shopify ke dalam satu papan pemuka yang sentiasa terkini — tanpa perlu mencantum hamparan secara manual setiap bulan.</span>
-            <span data-lang="en">Bring your Shopee, TikTok Shop and Shopify sales into one dashboard that stays current — no more stitching spreadsheets together every month.</span>
-          </p>
-          <ul class="prod__feats">
-            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
-              <span data-lang="ms">Muat naik eksport terus — rekod berulang dan tempoh bertindih dikesan secara automatik</span>
-              <span data-lang="en">Drop in raw exports — duplicates and overlapping periods are caught automatically</span></li>
-            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
-              <span data-lang="ms">Padanan produk pintar merentas SKU setiap saluran</span>
-              <span data-lang="en">Smart product matching across every channel's SKUs</span></li>
-            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
-              <span data-lang="ms">Papan pemuka jualan, produk dan pemulangan yang boleh anda ubah suai sendiri</span>
-              <span data-lang="en">Sales, product and returns dashboards you can tailor yourself</span></li>
-          </ul>
-          <div class="prod__cta">
-            <a class="plink" data-product="onego">
-              <span data-lang="ms">Lawati OneGo</span><span data-lang="en">Visit OneGo</span>
-              <svg aria-hidden="true" focusable="false"><use href="#ico-arrow"/></svg>
-            </a>
-            <span class="plink__soon"><span data-lang="ms">Pautan akan datang</span><span data-lang="en">Link coming soon</span></span>
-            <a class="prod__ask" href="#contact"><span data-lang="ms">Tanya kami tentang OneGo</span><span data-lang="en">Ask us about OneGo</span></a>
+        <!-- ---------- OneGo ---------- -->
+        <article class="prod prod--onego" id="onego" aria-labelledby="onego-name">
+          <div class="prod__media">
+            <figure class="frame prod__shot">
+              <div class="frame__bar"><i></i><i></i><i></i></div>
+              <img src="products/onego-overview.webp" width="1600" height="1000" loading="lazy" decoding="async"
+                   alt="Papan pemuka OneGo: hasil bersih, pesanan dan pelanggan, serta hasil bulanan mengikut saluran jualan"
+                   data-alt-ms="Papan pemuka OneGo: hasil bersih, pesanan dan pelanggan, serta hasil bulanan mengikut saluran jualan"
+                   data-alt-en="OneGo dashboard: net revenue, orders and customers, plus monthly revenue by sales channel">
+            </figure>
+            <figure class="frame frame--sm prod__inset">
+              <img src="products/onego-matching.webp" width="960" height="600" loading="lazy" decoding="async"
+                   alt="Skrin padanan produk OneGo: peratus hasil yang dipadankan bagi setiap saluran"
+                   data-alt-ms="Skrin padanan produk OneGo: peratus hasil yang dipadankan bagi setiap saluran"
+                   data-alt-en="OneGo product matching screen: share of revenue matched per channel">
+            </figure>
           </div>
-        </div>
-      </article>
 
-      <!-- ---------- Whizzard ---------- -->
-      <article class="prod prod--whizzard prod--flip reveal" id="whizzard" aria-labelledby="whizzard-name">
-        <div class="prod__media">
-          <figure class="frame prod__shot">
-            <div class="frame__bar"><i></i><i></i><i></i></div>
-            <img src="products/whizzard-verified.webp" width="1600" height="1000" loading="lazy" decoding="async"
-                 alt="Whizzard: pesanan penghantaran yang diimbas di sebelah data yang telah diekstrak dan disahkan"
-                 data-alt-ms="Whizzard: pesanan penghantaran yang diimbas di sebelah data yang telah diekstrak dan disahkan"
-                 data-alt-en="Whizzard: a scanned delivery order beside the extracted, verified data">
-          </figure>
-          <figure class="frame frame--sm prod__inset">
-            <img src="products/whizzard-documents.webp" width="960" height="600" loading="lazy" decoding="async"
-                 alt="Senarai dokumen Whizzard dengan status setiap borang"
-                 data-alt-ms="Senarai dokumen Whizzard dengan status setiap borang"
-                 data-alt-en="Whizzard document list showing each form's status">
-          </figure>
-        </div>
-
-        <div class="prod__body">
-          <p class="prod__kicker">
-            <span data-lang="ms">Pendigitalan borang dengan AI</span>
-            <span data-lang="en">AI form digitisation</span>
-          </p>
-          <h3 class="prod__name" id="whizzard-name">
-            <svg class="prod__mark" aria-hidden="true" focusable="false"><use href="#mk-whizzard"/></svg>
-            Whizzard
-          </h3>
-          <p class="prod__lede">
-            <span data-lang="ms">Ambil gambar borang kertas, dan Whizzard menukarnya kepada data berstruktur yang telah disemak — sedia untuk dieksport ke sistem anda.</span>
-            <span data-lang="en">Photograph a paper form and Whizzard turns it into clean, checked, structured data — ready to export into your own systems.</span>
-          </p>
-          <ul class="prod__feats">
-            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
-              <span data-lang="ms">Imbas dari telefon — beberapa foto atau satu PDF menjadi satu dokumen</span>
-              <span data-lang="en">Scan from a phone — several photos or one PDF become one document</span></li>
-            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
-              <span data-lang="ms">Sediakan jenis borang baharu daripada satu sampel — AI mencadangkan medannya</span>
-              <span data-lang="en">Set up a new form type from one sample — the AI proposes the fields</span></li>
-            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
-              <span data-lang="ms">Semakan automatik menanda nilai yang meragukan untuk disahkan oleh manusia</span>
-              <span data-lang="en">Automatic checks flag doubtful values for a person to verify</span></li>
-          </ul>
-          <div class="prod__cta">
-            <a class="plink" data-product="whizzard">
-              <span data-lang="ms">Lawati Whizzard</span><span data-lang="en">Visit Whizzard</span>
-              <svg aria-hidden="true" focusable="false"><use href="#ico-arrow"/></svg>
-            </a>
-            <span class="plink__soon"><span data-lang="ms">Pautan akan datang</span><span data-lang="en">Link coming soon</span></span>
-            <a class="prod__ask" href="#contact"><span data-lang="ms">Tanya kami tentang Whizzard</span><span data-lang="en">Ask us about Whizzard</span></a>
+          <div class="prod__body">
+            <p class="prod__kicker">
+              <span data-lang="ms">Analitik jualan pelbagai saluran</span>
+              <span data-lang="en">Multi-channel sales analytics</span>
+            </p>
+            <h3 class="prod__name" id="onego-name">
+              <svg class="prod__mark" aria-hidden="true" focusable="false"><use href="#mk-onego"/></svg>
+              OneGo
+            </h3>
+            <p class="prod__lede">
+              <span data-lang="ms">Satukan data jualan dari Shopee, TikTok Shop dan Shopify ke dalam satu papan pemuka yang sentiasa terkini — tanpa perlu mencantum hamparan secara manual setiap bulan.</span>
+              <span data-lang="en">Bring your Shopee, TikTok Shop and Shopify sales into one dashboard that stays current — no more stitching spreadsheets together every month.</span>
+            </p>
+            <ul class="prod__feats">
+              <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+                <span data-lang="ms">Muat naik eksport terus — rekod berulang dan tempoh bertindih dikesan secara automatik</span>
+                <span data-lang="en">Drop in raw exports — duplicates and overlapping periods are caught automatically</span></li>
+              <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+                <span data-lang="ms">Padanan produk pintar merentas SKU setiap saluran</span>
+                <span data-lang="en">Smart product matching across every channel's SKUs</span></li>
+              <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+                <span data-lang="ms">Papan pemuka jualan, produk dan pemulangan yang boleh anda ubah suai sendiri</span>
+                <span data-lang="en">Sales, product and returns dashboards you can tailor yourself</span></li>
+            </ul>
+            <div class="prod__cta">
+              <a class="plink" data-product="onego">
+                <span data-lang="ms">Lawati OneGo</span><span data-lang="en">Visit OneGo</span>
+                <svg aria-hidden="true" focusable="false"><use href="#ico-arrow"/></svg>
+              </a>
+              <span class="plink__soon"><span data-lang="ms">Pautan akan datang</span><span data-lang="en">Link coming soon</span></span>
+              <a class="prod__ask" href="#contact"><span data-lang="ms">Tanya kami tentang OneGo</span><span data-lang="en">Ask us about OneGo</span></a>
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
 
-      <!-- ---------- Smart Tahfiz ---------- -->
-      <article class="prod prod--tahfiz reveal" id="smart-tahfiz" aria-labelledby="tahfiz-name">
-        <div class="prod__media">
-          <figure class="frame prod__shot">
-            <div class="frame__bar"><i></i><i></i><i></i></div>
-            <img src="products/smart-tahfiz-dashboard.webp" width="1600" height="1000" loading="lazy" decoding="async"
-                 alt="Papan pemuka Smart Tahfiz: pelajar aktif, kehadiran bulanan, purata juzuk dan kehadiran tujuh hari"
-                 data-alt-ms="Papan pemuka Smart Tahfiz: pelajar aktif, kehadiran bulanan, purata juzuk dan kehadiran tujuh hari"
-                 data-alt-en="Smart Tahfiz dashboard: active students, monthly attendance, average juzuk and seven-day attendance">
-          </figure>
-          <figure class="frame frame--sm prod__inset">
-            <img src="products/smart-tahfiz-hafazan.webp" width="960" height="600" loading="lazy" decoding="async"
-                 alt="Rekod hafazan Smart Tahfiz: ringkasan kemajuan pelajar mengikut juzuk"
-                 data-alt-ms="Rekod hafazan Smart Tahfiz: ringkasan kemajuan pelajar mengikut juzuk"
-                 data-alt-en="Smart Tahfiz hafazan record: a student's progress summary by juzuk">
-          </figure>
-        </div>
-
-        <div class="prod__body">
-          <p class="prod__kicker">
-            <span data-lang="ms">Sistem Sekolah Pintar</span>
-            <span data-lang="en">Smart School System</span>
-          </p>
-          <h3 class="prod__name" id="tahfiz-name">
-            <svg class="prod__mark" aria-hidden="true" focusable="false"><use href="#mk-tahfiz"/></svg>
-            Smart Tahfiz
-          </h3>
-          <p class="prod__lede">
-            <span data-lang="ms">Sistem pengurusan sekolah tahfiz yang menyeluruh — jejak hafazan hingga ke peringkat ayat, rekod kehadiran, dan pantau setiap sekolah dari satu portal.</span>
-            <span data-lang="en">End-to-end management for tahfiz schools — track hafazan down to the ayat, record attendance, and oversee every school from one portal.</span>
-          </p>
-          <ul class="prod__feats">
-            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
-              <span data-lang="ms">Rekod hafazan mengikut ayat, dengan kemajuan hafalan pertama dan ulangan</span>
-              <span data-lang="en">Ayat-level hafazan records, with first-pass and revision progress</span></li>
-            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
-              <span data-lang="ms">Kehadiran harian bagi sesi pagi dan petang</span>
-              <span data-lang="en">Daily attendance for morning and afternoon sessions</span></li>
-            <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
-              <span data-lang="ms">Akses mengikut peranan untuk guru, pentadbir sekolah, pengurusan dan pelajar</span>
-              <span data-lang="en">Role-based access for teachers, school admins, management and students</span></li>
-          </ul>
-          <div class="prod__cta">
-            <a class="plink" data-product="smart-tahfiz">
-              <span data-lang="ms">Lawati Smart Tahfiz</span><span data-lang="en">Visit Smart Tahfiz</span>
-              <svg aria-hidden="true" focusable="false"><use href="#ico-arrow"/></svg>
-            </a>
-            <span class="plink__soon"><span data-lang="ms">Pautan akan datang</span><span data-lang="en">Link coming soon</span></span>
-            <a class="prod__ask" href="#contact"><span data-lang="ms">Tanya kami tentang Smart Tahfiz</span><span data-lang="en">Ask us about Smart Tahfiz</span></a>
+        <!-- ---------- Whizzard ---------- -->
+        <article class="prod prod--whizzard" id="whizzard" aria-labelledby="whizzard-name">
+          <div class="prod__media">
+            <figure class="frame prod__shot">
+              <div class="frame__bar"><i></i><i></i><i></i></div>
+              <img src="products/whizzard-verified.webp" width="1600" height="1000" loading="lazy" decoding="async"
+                   alt="Whizzard: pesanan penghantaran yang diimbas di sebelah data yang telah diekstrak dan disahkan"
+                   data-alt-ms="Whizzard: pesanan penghantaran yang diimbas di sebelah data yang telah diekstrak dan disahkan"
+                   data-alt-en="Whizzard: a scanned delivery order beside the extracted, verified data">
+            </figure>
+            <figure class="frame frame--sm prod__inset">
+              <img src="products/whizzard-documents.webp" width="960" height="600" loading="lazy" decoding="async"
+                   alt="Senarai dokumen Whizzard dengan status setiap borang"
+                   data-alt-ms="Senarai dokumen Whizzard dengan status setiap borang"
+                   data-alt-en="Whizzard document list showing each form's status">
+            </figure>
           </div>
-        </div>
-      </article>
 
+          <div class="prod__body">
+            <p class="prod__kicker">
+              <span data-lang="ms">Pendigitalan borang dengan AI</span>
+              <span data-lang="en">AI form digitisation</span>
+            </p>
+            <h3 class="prod__name" id="whizzard-name">
+              <svg class="prod__mark" aria-hidden="true" focusable="false"><use href="#mk-whizzard"/></svg>
+              Whizzard
+            </h3>
+            <p class="prod__lede">
+              <span data-lang="ms">Ambil gambar borang kertas, dan Whizzard menukarnya kepada data berstruktur yang telah disemak — sedia untuk dieksport ke sistem anda.</span>
+              <span data-lang="en">Photograph a paper form and Whizzard turns it into clean, checked, structured data — ready to export into your own systems.</span>
+            </p>
+            <ul class="prod__feats">
+              <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+                <span data-lang="ms">Imbas dari telefon — beberapa foto atau satu PDF menjadi satu dokumen</span>
+                <span data-lang="en">Scan from a phone — several photos or one PDF become one document</span></li>
+              <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+                <span data-lang="ms">Sediakan jenis borang baharu daripada satu sampel — AI mencadangkan medannya</span>
+                <span data-lang="en">Set up a new form type from one sample — the AI proposes the fields</span></li>
+              <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+                <span data-lang="ms">Semakan automatik menanda nilai yang meragukan untuk disahkan oleh manusia</span>
+                <span data-lang="en">Automatic checks flag doubtful values for a person to verify</span></li>
+            </ul>
+            <div class="prod__cta">
+              <a class="plink" data-product="whizzard">
+                <span data-lang="ms">Lawati Whizzard</span><span data-lang="en">Visit Whizzard</span>
+                <svg aria-hidden="true" focusable="false"><use href="#ico-arrow"/></svg>
+              </a>
+              <span class="plink__soon"><span data-lang="ms">Pautan akan datang</span><span data-lang="en">Link coming soon</span></span>
+              <a class="prod__ask" href="#contact"><span data-lang="ms">Tanya kami tentang Whizzard</span><span data-lang="en">Ask us about Whizzard</span></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ---------- Smart Tahfiz ---------- -->
+        <article class="prod prod--tahfiz" id="smart-tahfiz" aria-labelledby="tahfiz-name">
+          <div class="prod__media">
+            <figure class="frame prod__shot">
+              <div class="frame__bar"><i></i><i></i><i></i></div>
+              <img src="products/smart-tahfiz-dashboard.webp" width="1600" height="1000" loading="lazy" decoding="async"
+                   alt="Papan pemuka Smart Tahfiz: pelajar aktif, kehadiran bulanan, purata juzuk dan kehadiran tujuh hari"
+                   data-alt-ms="Papan pemuka Smart Tahfiz: pelajar aktif, kehadiran bulanan, purata juzuk dan kehadiran tujuh hari"
+                   data-alt-en="Smart Tahfiz dashboard: active students, monthly attendance, average juzuk and seven-day attendance">
+            </figure>
+            <figure class="frame frame--sm prod__inset">
+              <img src="products/smart-tahfiz-hafazan.webp" width="960" height="600" loading="lazy" decoding="async"
+                   alt="Rekod hafazan Smart Tahfiz: ringkasan kemajuan pelajar mengikut juzuk"
+                   data-alt-ms="Rekod hafazan Smart Tahfiz: ringkasan kemajuan pelajar mengikut juzuk"
+                   data-alt-en="Smart Tahfiz hafazan record: a student's progress summary by juzuk">
+            </figure>
+          </div>
+
+          <div class="prod__body">
+            <p class="prod__kicker">
+              <span data-lang="ms">Sistem Sekolah Pintar</span>
+              <span data-lang="en">Smart School System</span>
+            </p>
+            <h3 class="prod__name" id="tahfiz-name">
+              <svg class="prod__mark" aria-hidden="true" focusable="false"><use href="#mk-tahfiz"/></svg>
+              Smart Tahfiz
+            </h3>
+            <p class="prod__lede">
+              <span data-lang="ms">Sistem pengurusan sekolah tahfiz yang menyeluruh — jejak hafazan hingga ke peringkat ayat, rekod kehadiran, dan pantau setiap sekolah dari satu portal.</span>
+              <span data-lang="en">End-to-end management for tahfiz schools — track hafazan down to the ayat, record attendance, and oversee every school from one portal.</span>
+            </p>
+            <ul class="prod__feats">
+              <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+                <span data-lang="ms">Rekod hafazan mengikut ayat, dengan kemajuan hafalan pertama dan ulangan</span>
+                <span data-lang="en">Ayat-level hafazan records, with first-pass and revision progress</span></li>
+              <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+                <span data-lang="ms">Kehadiran harian bagi sesi pagi dan petang</span>
+                <span data-lang="en">Daily attendance for morning and afternoon sessions</span></li>
+              <li><svg aria-hidden="true" focusable="false"><use href="#ico-check"/></svg>
+                <span data-lang="ms">Akses mengikut peranan untuk guru, pentadbir sekolah, pengurusan dan pelajar</span>
+                <span data-lang="en">Role-based access for teachers, school admins, management and students</span></li>
+            </ul>
+            <div class="prod__cta">
+              <a class="plink" data-product="smart-tahfiz">
+                <span data-lang="ms">Lawati Smart Tahfiz</span><span data-lang="en">Visit Smart Tahfiz</span>
+                <svg aria-hidden="true" focusable="false"><use href="#ico-arrow"/></svg>
+              </a>
+              <span class="plink__soon"><span data-lang="ms">Pautan akan datang</span><span data-lang="en">Link coming soon</span></span>
+              <a class="prod__ask" href="#contact"><span data-lang="ms">Tanya kami tentang Smart Tahfiz</span><span data-lang="en">Ask us about Smart Tahfiz</span></a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="pcar__foot">
+        <button class="pcar__arrow pcar__arrow--prev" type="button" data-step="-1" aria-controls="pcar-track">
+          <svg aria-hidden="true" focusable="false"><use href="#ico-arrow"/></svg>
+          <span class="vh"><span data-lang="ms">Produk sebelumnya</span><span data-lang="en">Previous product</span></span>
+        </button>
+        <div class="pcar__dots" aria-hidden="true"><i class="is-on"></i><i></i><i></i></div>
+        <button class="pcar__arrow pcar__arrow--next" type="button" data-step="1" aria-controls="pcar-track">
+          <svg aria-hidden="true" focusable="false"><use href="#ico-arrow"/></svg>
+          <span class="vh"><span data-lang="ms">Produk seterusnya</span><span data-lang="en">Next product</span></span>
+        </button>
+      </div>
     </div>
   </div>
 </section>

@@ -171,7 +171,125 @@
   }
 
   /* ---------------------------------------------------------
-     6. Nav: underline the link for the section in view.
+     6. Product carousel
+     The track is a CSS scroll-snap strip, so swiping works on its
+     own; this adds the tabs, arrows and dots and keeps them in step
+     with wherever the track has scrolled. Slides that aren't showing
+     are inert, so Tab never lands on a product that's off-screen.
+     Links to a product (#onego, …) pick its slide.
+     --------------------------------------------------------- */
+  var pcar = document.getElementById('pcar');
+  var track = document.getElementById('pcar-track');
+
+  if (pcar && track) {
+    var slides = Array.prototype.slice.call(track.children);
+    var tabs = Array.prototype.slice.call(pcar.querySelectorAll('[role="tab"]'));
+    var dots = Array.prototype.slice.call(pcar.querySelectorAll('.pcar__dots i'));
+    var slideIndex = {};
+    var current = -1;
+    var target = null;   // the slide a tab/arrow scroll is gliding to
+
+    pcar.setAttribute('role', 'region');
+    pcar.setAttribute('aria-roledescription', 'carousel');
+    slides.forEach(function (slide, i) {
+      slideIndex[slide.id] = i;
+      slide.setAttribute('role', 'tabpanel');
+      slide.setAttribute('aria-roledescription', 'slide');
+    });
+
+    var select = function (i) {
+      if (i === current) return;
+      current = i;
+      slides.forEach(function (slide, n) { slide.inert = n !== i; });
+      tabs.forEach(function (tab, n) {
+        tab.setAttribute('aria-selected', String(n === i));
+        tab.tabIndex = n === i ? 0 : -1;
+      });
+      dots.forEach(function (dot, n) { dot.classList.toggle('is-on', n === i); });
+    };
+
+    var goTo = function (i, instant) {
+      i = (i + slides.length) % slides.length;
+      var left = slides[i].offsetLeft - slides[0].offsetLeft;
+      select(i);
+      target = Math.abs(track.scrollLeft - left) < 2 ? null : i;
+      track.scrollTo({ left: left, behavior: instant || reduced ? 'auto' : 'smooth' });
+    };
+
+    var nearest = function () {
+      var step = slides.length > 1 ? slides[1].offsetLeft - slides[0].offsetLeft : 1;
+      return Math.max(0, Math.min(slides.length - 1, Math.round(track.scrollLeft / step)));
+    };
+
+    /* Follow swipes. While a tab/arrow scroll glides past the slides
+       in between, hold the selection on its destination instead. */
+    var queued = false;
+    track.addEventListener('scroll', function () {
+      if (queued) return;
+      queued = true;
+      window.requestAnimationFrame(function () {
+        queued = false;
+        var n = nearest();
+        if (target !== null) {
+          if (n === target) target = null;
+          return;
+        }
+        select(n);
+      });
+    }, { passive: true });
+
+    /* A hand on the track overrides any glide still in progress. */
+    ['pointerdown', 'touchstart', 'wheel'].forEach(function (type) {
+      track.addEventListener(type, function () { target = null; }, { passive: true });
+    });
+
+    tabs.forEach(function (tab, n) {
+      tab.addEventListener('click', function () { goTo(n); });
+
+      /* Arrow keys move between tabs, per the ARIA tabs pattern. */
+      tab.addEventListener('keydown', function (e) {
+        var to;
+        if (e.key === 'ArrowRight') to = n + 1;
+        else if (e.key === 'ArrowLeft') to = n - 1;
+        else if (e.key === 'Home') to = 0;
+        else if (e.key === 'End') to = tabs.length - 1;
+        else return;
+        e.preventDefault();
+        to = (to + tabs.length) % tabs.length;
+        goTo(to);
+        tabs[to].focus();
+      });
+    });
+
+    Array.prototype.slice.call(pcar.querySelectorAll('[data-step]')).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        goTo(current + Number(btn.getAttribute('data-step')));
+      });
+    });
+
+    /* The hero chips and footer links point at #onego etc. */
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a[href^="#"]');
+      var n = link ? slideIndex[link.getAttribute('href').slice(1)] : undefined;
+      if (n === undefined) return;
+      e.preventDefault();
+      goTo(n, true);
+      pcar.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', '#' + slides[n].id);
+      }
+    });
+
+    /* Keep the current slide aligned when the width changes. */
+    window.addEventListener('resize', function () { goTo(current, true); });
+
+    select(0);
+    var fromHash = slideIndex[window.location.hash.slice(1)];
+    if (fromHash) goTo(fromHash, true);
+  }
+
+  /* ---------------------------------------------------------
+     7. Nav: underline the link for the section in view.
      The observed band is a thin strip across the middle of the
      viewport, so exactly one section holds it at a time.
      --------------------------------------------------------- */
@@ -201,7 +319,7 @@
   }
 
   /* ---------------------------------------------------------
-     7. Copyright year (both language variants)
+     8. Copyright year (both language variants)
      --------------------------------------------------------- */
   var year = String(new Date().getFullYear());
   ['yr', 'yr-en'].forEach(function (id) {
