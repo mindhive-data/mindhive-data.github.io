@@ -16,7 +16,10 @@
      JS only flips the attribute and syncs the metadata that
      CSS can't reach: <title>, meta description, og:locale.
      --------------------------------------------------------- */
-  var META = {
+  /* Each page may set window.PAGE_META before this script loads, so the
+     title/description swapped in on language toggle matches that page
+     instead of the homepage's. Falls back to the homepage copy. */
+  var META = window.PAGE_META || {
     ms: {
       title: 'Mindhive — Latihan Excel, Data & AI | Pakar Data & Kecerdasan Buatan',
       desc: 'Mindhive menawarkan latihan Excel, latihan data dan latihan AI bertauliah, serta infrastruktur data & AI generatif untuk perniagaan Malaysia.',
